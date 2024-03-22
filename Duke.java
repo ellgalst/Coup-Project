@@ -1,4 +1,4 @@
-public class Duke{
+public class Duke extends Character{
     /**
      * A child class of Character.
      * action: to tax, which means to collect 3 coins from Bank.
