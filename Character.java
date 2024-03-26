@@ -5,10 +5,10 @@
  * action: a method to take an action with a corresponding effect.
  * counterAction: a method to block the action.
  */
-public abstact class Character{
+public abstract class Character{
     public abstract action();
     public abstract counterAction();
-    public getCharacter(){
+    public String getCharacter(){
         return this.getClass().getSimpleName();
     }
 }
