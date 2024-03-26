@@ -6,8 +6,8 @@
  * counterAction: a method to block the action.
  */
 public abstract class Character{
-    public abstract action();
-    public abstract counterAction();
+    public abstract void action();
+    public abstract void counterAction();
     public String getCharacter(){
         return this.getClass().getSimpleName();
     }
