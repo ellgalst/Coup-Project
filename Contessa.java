@@ -4,4 +4,13 @@ public class Contessa extends Character{
      * action: no action.
      * counterAction: to block assasination.
      */
+
+    @Override
+    public void action(){
+
+    }
+    @Override
+    public void counterAction() {
+
+    }
 }

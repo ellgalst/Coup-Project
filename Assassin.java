@@ -4,4 +4,13 @@ public class Assassin extends Character{
      * action: to assassinate, which means to pay and make any player lose one character.
      * counterAction: it has no counteraction
      */
+
+    @Override
+    public void action(){
+
+    }
+    @Override
+    public void counterAction() {
+
+    }
 }
