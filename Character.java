@@ -3,7 +3,6 @@
  * has 3 main methods(+ some other helping methods): influence, action and counterAction.
  * influence: returns the character type.
  * action: a method to take an action with a corresponding effect.
- * counterAction: a method to block the action.
  */
 public abstract class Character{
     protected String name;
