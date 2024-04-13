@@ -3,14 +3,25 @@
  * action: to assassinate, which means to pay and make any player lose one character.
  * counterAction: it has no counteraction
  */
-public class Assassin extends Character{
+public class Assassin extends Character {
 
-    @Override
-    public void action(){
-
+    public Assassin() {
+        super("Assassin", "Pays 3 coins and makes another player lose 1 influence,");
     }
-    @Override
-    public void counterAction() {
 
+    public void action(Player player, Game game) {
+        if (player.getCoins() >= 3) {
+            player.changeCoins(-3);
+            game.assasinate(player);
+        }
+    }
+
+    public boolean block(ActionType action) {
+        return action == ActionType.ASSASINATION;
+    }
+
+    @Override
+    public boolean isBlockable(ActionType action) {
+        return true;
     }
 }
