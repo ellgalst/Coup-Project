@@ -14,6 +14,13 @@ public abstract class Character{
         description = s;
     }
 
+    public enum ActionType {
+        TAX,
+        ASSASSINATION,
+        EXCHANGING,
+        STEALING
+    }
+
     public abstract void action(Player player, Game game);
     public boolean block(ActionType action){
         return false;
