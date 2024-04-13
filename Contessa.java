@@ -8,18 +8,20 @@ public class Contessa extends Character{
         super("Contessa", "Blocks assassination attempts.");
     }
 
-    @Override
-    public void action(Player player, Game game){
+    Action.Types canAct = null;
 
-    }
-
-    @Override
-    public boolean block(ActionType action){
-        return action == ActionType.ASSASSINATE;
-    }
-
-    @Override
-    public boolean isBlockable(ActionType action){
-        return false;
-    }
+//    @Override
+//    public void action(Player player){
+//
+//    }
+//
+//    @Override
+//    public boolean block(Action.Types action){
+//        return action == Action.Types.ASSASSINATE;
+//    }
+//
+//    @Override
+//    public boolean isBlockable(Action.Types action){
+//        return false;
+//    }
 }

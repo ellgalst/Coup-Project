@@ -9,19 +9,21 @@ public class Duke extends Character{
     public Duke(){
         super("Duke", "Collects 2 coins. Can block Foreign Aid.");
     }
+    public Action.Types canAct = Action.Types.TAX;
 
-    @Override
-    public void action(Player player, Game game){
-        game.tax(player);
-    }
-
-    @Override
-    public boolean block(ActionType action){
-        return action==ActionType.FOREIGNAID;
-    }
-
-    @Override
-    public boolean isBlockable(ActionType action){
-        return true;
-    }
+//
+//    @Override
+//    public void action(Player player, Action action){
+//        action.tax(player);
+//    }
+//
+//    @Override
+//    public boolean block(){
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isBlockable(Action.Types action){
+//        return true;
+//    }
 }

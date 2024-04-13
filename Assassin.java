@@ -9,19 +9,21 @@ public class Assassin extends Character {
         super("Assassin", "Pays 3 coins and makes another player lose 1 influence,");
     }
 
-    public void action(Player player, Game game) {
-        if (player.getCoins() >= 3) {
-            player.changeCoins(-3);
-            game.assasinate(player);
-        }
-    }
+    Action.Types canAct = Action.Types.ASSASSINATE;
 
-    public boolean block(ActionType action) {
-        return action == ActionType.ASSASINATION;
-    }
+//    public void action(Player player) {
+//        if (player.getCoins() >= 3) {
+//            player.changeCoins(-3);
+//            Action.assasinate(player);
+//        }
+//    }
 
-    @Override
-    public boolean isBlockable(ActionType action) {
-        return true;
-    }
+//    public boolean block(Action.Types action) {
+//        return action == Action.Types.ASSASSINATE;
+//    }
+//
+//    @Override
+//    public boolean isBlockable(Action.Types action) {
+//        return true;
+//    }
 }
