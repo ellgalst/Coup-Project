@@ -2,7 +2,7 @@
  * A class to manage financial transactions.
  */
 public class Bank{
-
+    // test
     public void foreignAid(Player player){
         collectTwoCoins(player);
         isBlocked(player.getCharacter); // some method necessary to get the character for this method.
