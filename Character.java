@@ -8,6 +8,12 @@
 public abstract class Character{
     protected String name;
     protected String description;
+
+    public Character(String characterName, String s) {
+        name = characterName;
+        description = s;
+    }
+
     public abstract void action(Player player, Game game);
     public boolean block(ActionType action){
         return false;
@@ -20,4 +26,5 @@ public abstract class Character{
     public String getDescription(){
         return description;
     }
+
 }

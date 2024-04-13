@@ -1,16 +1,22 @@
 /**
  * A child class of Character.
- * action: to exchange, which means to draw 2 characters and put 2 back.
- * counterAction: to block stealing.
  */
 public class Ambassador extends Character{
+    public Ambassador(){
+        super("Ambassador", "Exchanges cards with the deck. Can block stealing.");
+    }
     @Override
-    public void action() {
-        
+    public void action(Player player, Game game) {
+        game.exchange(player);
     }
 
     @Override
-    public void counterAction() {
+    public boolean block(ActionType action){
+        return action==ActionType.STEAL;
+    }
 
+    @Override
+    public boolean isBlockable(ActionType action){
+        return false;
     }
 }
