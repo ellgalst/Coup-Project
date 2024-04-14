@@ -5,10 +5,14 @@
  */
 public class Assassin extends Character {
 
+    /**
+     * Initializes an Assassin character with its name and description.
+     */
     public Assassin() {
         super("Assassin", "Pays 3 coins and makes another player lose 1 influence,");
     }
 
+    // Determines the action type this character can perform
     Action.Types canAct = Action.Types.ASSASSINATE;
 
 //    public void action(Player player) {

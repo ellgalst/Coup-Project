@@ -2,6 +2,11 @@ import java.util.Scanner;
 // the main class to run the project
 public class CoupApp {
 
+    /**
+     * The entry point of the Coup game.
+     *
+     * @throws InvalidNumberOfPlayers If the number of players is invalid.
+     */
     public static void main(final String[] args) throws InvalidNumberOfPlayers {
         Game myGame = new Game(7);
         myGame.start();

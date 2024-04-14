@@ -4,10 +4,14 @@
  * counterAction: to block assasination.
  */
 public class Contessa extends Character{
+    /**
+     * Initializes a Contessa character with its name and description.
+     */
     public Contessa(){
         super("Contessa", "Blocks assassination attempts.");
     }
 
+    // The Contessa character has no action
     Action.Types canAct = null;
 
 //    @Override

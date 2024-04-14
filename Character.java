@@ -5,11 +5,26 @@
  * action: a method to take an action with a corresponding effect.
  */
 public abstract class Character{
-    protected String name;
-    protected String description;
 
+    /**
+     * The name of the character.
+     */
+    protected String name;
+    /**
+     * The description of the character.
+     */
+    protected String description;
+    /**
+     * The type of action this character can perform.
+     */
     public Action.Types canAct;
 
+    /**
+     * Initializes a Character with its name and description.
+     *
+     * @param characterName The name of the character.
+     * @param desc          The description of the character.
+     */
     public Character(String characterName, String s) {
         name = characterName;
         description = s;

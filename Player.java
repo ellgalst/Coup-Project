@@ -6,22 +6,47 @@ import java.util.List;
  * A separate class to keep track of all players.
  */
 public class Player {
+    /**
+     * Initializes a player with the specified initial number of coins in their wallet.
+     * @param initialCoins The initial number of coins in the player's wallet.
+     */
     public Player(int initialCoins) {
         this.wallet = initialCoins;
     }
 
     ArrayList<Character> influences = new ArrayList<Character>(2);
+    /**
+     * The initial number of coins in the player's wallet.
+     */
     public int wallet;
+    /**
+     * The number of character influences (cards) the player possesses.
+     */
     private int theNumberOfInfluences;
 
+    /**
+     * Changes the player's wallet balance by the specified amount.
+     *
+     * @param update The amount by which to update the player's wallet balance.
+     */
     public void changeWallet(int update) {
         this.wallet += update;
     }
+    /**
+     * Retrieves the number of character influences (cards) the player possesses.
+     *
+     * @return The number of character influences (cards) the player possesses.
+     */
     public int getTheNumberOfInfluences() {
         return influences.size();
     }
 
-    // gets the actions available to the player based on their wish to cheat (isCorrectAction = false) or be honest (isCorrectAction = true)
+    /**
+     * Gets the actions available to the player based on their wish to cheat or be honest.
+     *
+     * @param isCorrectAction True if the player wishes to be honest, false if they wish to cheat.
+     * @return The list of available actions for the player.
+     */
     public ArrayList<Action.Types> getAvailableActions(boolean isCorrectAction) {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
@@ -52,7 +77,12 @@ public class Player {
     }
 
 
-    // challenges another player
+    /**
+     * Challenges another player's action.
+     *
+     * @param other The player whose action is being challenged.
+     * @return True if the challenge is successful, false otherwise.
+     */
     public boolean challenge(Player other) {
         return false;
     }

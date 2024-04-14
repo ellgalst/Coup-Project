@@ -5,11 +5,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
+    /**
+     * The total number of cards in the deck.
+     */
     public static final int cardCount = 15;
-    // Array of the cards in the deck. dynamic.
+    /**
+     * Arraylist to store the current cards in the deck.
+     */
     ArrayList<Character> currentCards = new ArrayList<Character>(cardCount);
 
-    // add cards in the deck
+    /**
+     * Initializes the deck with the default set of cards.
+     *
+     * @return The arraylist of initialized cards.
+     */
     public ArrayList<Character> initializeDeck() {
         for (int i = 0; i < 3; i++) {
             currentCards.add(new Ambassador());
@@ -29,8 +38,14 @@ public class Deck {
         return currentCards;
     }
 
-    // randomly chooses any amount of cards from the current array (can be deck or player's cards)
-    public ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
+    /**
+     * Randomly selects a specified number of cards from the given deck.
+     *
+     * @param deck  The deck from which cards are selected.
+     * @param count The number of cards to select.
+     * @return The arraylist of randomly selected cards.
+     */
+     public ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
         Random rn = new Random();
         int length = deck.size();
 
@@ -51,8 +66,13 @@ public class Deck {
         return randomCharacters;
     }
 
-    // returns any amount of arrays of 2 characters to distribute to the players
-    public ArrayList<Player> distributeCards(ArrayList<Player> currentPlayers) {
+    /**
+     * Distributes cards to the players from the deck.
+     *
+     * @param currentPlayers The arraylist of players to whom cards will be distributed.
+     * @return The arraylist of players with their respective cards.
+     */
+     public ArrayList<Player> distributeCards(ArrayList<Player> currentPlayers) {
         Character[][] pickedCards = new Character[currentPlayers.size()][2];
         for (Player player : currentPlayers){
             player.influences = randomizer(this.currentCards, 2);

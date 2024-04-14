@@ -4,10 +4,24 @@ import java.util.ArrayList;
  * A class to manage the game itself.
  */
 public class Game {
+    /**
+     * The list of players participating in the game.
+     */
     public ArrayList<Player> players;
+    /**
+     * The total number of players in the game.
+     */
     public int numberOfPlayers;
+    /**
+     * The deck of cards used in the game.
+     */
     Deck myDeck = new Deck();
 
+    /**
+     * Initializes a new game with the specified number of players.
+     *
+     * @param numberOfPlayers The number of players in the game.
+     */
     Game(int numberOfPlayers) {
         super();
         this.numberOfPlayers = numberOfPlayers;
@@ -17,13 +31,21 @@ public class Game {
         }
     }
 
-    // checks if the game is still going on
+    /**
+     * Checks if the game is still ongoing.
+     *
+     * @return True if the game is still ongoing, otherwise false.
+     */
     public boolean isNotOver() {
         return players.size() != 1;
     }
 
-    // a method that starts the game (the process)
-    public void start() throws InvalidNumberOfPlayers {
+    /**
+     * Starts the game.
+     *
+     * @throws InvalidNumberOfPlayers If the number of players is invalid.
+     */
+     public void start() throws InvalidNumberOfPlayers {
         if (!(this.numberOfPlayers > 1 && this.numberOfPlayers <= 7)) {
             throw new InvalidNumberOfPlayers();
         }
