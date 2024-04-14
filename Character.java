@@ -23,7 +23,7 @@ public abstract class Character{
      * Initializes a Character with its name and description.
      *
      * @param characterName The name of the character.
-     * @param desc          The description of the character.
+     * @param s          The description of the character.
      */
     public Character(String characterName, String s) {
         name = characterName;
