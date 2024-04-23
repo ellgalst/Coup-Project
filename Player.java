@@ -15,12 +15,22 @@ public class Player {
      * The number of character influences (cards) the player possesses.
      */
     private int theNumberOfInfluences;
+    private String playerName;
+    public String getName() {
+        return playerName;
+    }
+    public void setName(String update) {
+        playerName = update;
+    }
+    public boolean isHuman;
+
     /**
      * Initializes a player with the specified initial number of coins in their wallet.
      * @param initialCoins The initial number of coins in the player's wallet.
      */
-    public Player(int initialCoins) {
+    public Player(int initialCoins, boolean isHuman) {
         this.wallet = initialCoins;
+        this.isHuman = isHuman;
     }
 
     /**
@@ -61,7 +71,7 @@ public class Player {
         }
 
         if (wallet >= 7) {
-            return new ArrayList<>(List.of(Action.Types.COUP));
+            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
         } else if (isCorrectAction) {
             availableActions.addAll(correctActions);
             System.out.println("else if (isCorrectAction)");

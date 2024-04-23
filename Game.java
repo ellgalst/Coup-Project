@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * A class to manage the game itself.
@@ -27,7 +28,7 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
         this.players = new ArrayList<Player>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.players.add(new Player(2));
+            this.players.add(new Player(2, false));
         }
     }
 
@@ -50,9 +51,18 @@ public class Game {
             throw new InvalidNumberOfPlayers();
         }
 
-        ArrayList<Player> playerList = new ArrayList<Player>(numberOfPlayers);
-        for (int i = 0; i < numberOfPlayers; i++) {
-            playerList.add(new Player(2));
+         Scanner userInput = new Scanner(System.in);
+
+         ArrayList<Player> playerList = new ArrayList<Player>(numberOfPlayers);
+
+         System.out.println("Enter the name for the human-controlled player: ");
+         String playerName = userInput.nextLine();
+         Player humanPlayer = new Player(2, true);
+         humanPlayer.setName(playerName);
+         playerList.add(humanPlayer);
+
+        for (int i = 0; i < numberOfPlayers - 1; i++) {
+            playerList.add(new Player(2, false));
         }
 
         Deck myDeck = new Deck();
