@@ -11,7 +11,10 @@ public class Ambassador extends Character {
 
 
     // Determines the action type this character can perform
-    Action.Types canAct = Action.Types.EXCHANGE;
+    public Action.Types canAct () {
+        System.out.println(Action.Types.EXCHANGE);
+        return Action.Types.EXCHANGE;
+    }
 
 //    @Override
 //    public void action(Player player, Action action) {

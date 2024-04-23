@@ -15,9 +15,11 @@ public class Duke extends Character{
     /**
      * The type of action this character can perform.
      */
-    public Action.Types canAct = Action.Types.TAX;
+    public Action.Types canAct () {
+        System.out.println(Action.Types.TAX);
+        return Action.Types.TAX;
+    }
 
-//
 //    @Override
 //    public void action(Player player, Action action){
 //        action.tax(player);

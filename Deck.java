@@ -45,26 +45,24 @@ public class Deck {
      * @param count The number of cards to select.
      * @return The arraylist of randomly selected cards.
      */
-     public ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
+    public ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
         Random rn = new Random();
-        int length = deck.size();
 
-        if (count >= length) {
-            System.out.println("Count cannot be greater than the size of the deck.");
+        if (count >= deck.size()) {
+            System.out.println("Count cannot be greater than or equal to the size of the deck.");
             return null;
         }
 
         ArrayList<Character> randomCharacters = new ArrayList<Character>(count);
 
         for (int i = 0; i < count; i++) {
-            int currentIndex = rn.nextInt(length);
-            randomCharacters.add(deck.get(currentIndex));
-            deck.remove(currentIndex);
-            length--;
+            int randomIndex = rn.nextInt(deck.size());
+            randomCharacters.add(deck.get(randomIndex));
         }
 
         return randomCharacters;
     }
+
 
     /**
      * Distributes cards to the players from the deck.
@@ -73,7 +71,6 @@ public class Deck {
      * @return The arraylist of players with their respective cards.
      */
      public ArrayList<Player> distributeCards(ArrayList<Player> currentPlayers) {
-        Character[][] pickedCards = new Character[currentPlayers.size()][2];
         for (Player player : currentPlayers){
             player.influences = randomizer(this.currentCards, 2);
         }

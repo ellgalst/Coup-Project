@@ -14,7 +14,7 @@ public class CoupApp {
         while (myGame.isNotOver()) {
             for (Player player : myGame.players) {
                 System.out.println(player.wallet);
-                System.out.println(player.getAvailableActions(true));
+                System.out.println(player.getAvailableActions(false));
             }
         }
 

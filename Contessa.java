@@ -12,7 +12,9 @@ public class Contessa extends Character{
     }
 
     // The Contessa character has no action
-    Action.Types canAct = null;
+    public Action.Types canAct () {
+        return null;
+    }
 
 //    @Override
 //    public void action(Player player){

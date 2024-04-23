@@ -19,20 +19,20 @@ public class Action {
     /**
      * Method that implements taxation action of card Duke
      */
-    public void TAX() {
+    public void PerformTax() {
     }
 
     /**
      * Method that drawing 2 influence and
      * putting 2 back of card Ambassador
      */
-    public void EXCHANGE() {}
+    public void PerformExchange() {}
 
     /**
      * Implements the action of influence Captain
      * that can steal coins from other players
      */
-    public void STEAL(){
+    public void PerformSteal(){
 
     }
 
@@ -40,22 +40,22 @@ public class Action {
      * Method of card Assassin that forcing
      * one player to give up influence
      */
-    public void ASSASSINATE(){}
+    public void PerformAssassinate(){}
 
     /**
      * Method Income that collects one coin from the bank
      */
-    public void Income(){}
+    public void PerformIncome(){}
 
     /**
      * Method ForeignAid that collects two coins from the bank
      */
-    public  void ForeignAid(){}
+    public  void PerformForeignAid(){}
 
     /**
      * Method that cause a player to give up an influence
      */
-    public void Coup(){}
+    public void PerformCoup(){}
 
 
 }

@@ -12,7 +12,10 @@ public class Captain extends Character {
     }
 
     // Determines the action type this character can perform
-    Action.Types canAct = Action.Types.STEAL;
+    public Action.Types canAct () {
+        System.out.println(Action.Types.STEAL);
+        return Action.Types.STEAL;
+    }
 
 //    @Override
 //    public void action(Player player) {

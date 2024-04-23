@@ -6,14 +6,6 @@ import java.util.List;
  * A separate class to keep track of all players.
  */
 public class Player {
-    /**
-     * Initializes a player with the specified initial number of coins in their wallet.
-     * @param initialCoins The initial number of coins in the player's wallet.
-     */
-    public Player(int initialCoins) {
-        this.wallet = initialCoins;
-    }
-
     ArrayList<Character> influences = new ArrayList<Character>(2);
     /**
      * The initial number of coins in the player's wallet.
@@ -23,6 +15,13 @@ public class Player {
      * The number of character influences (cards) the player possesses.
      */
     private int theNumberOfInfluences;
+    /**
+     * Initializes a player with the specified initial number of coins in their wallet.
+     * @param initialCoins The initial number of coins in the player's wallet.
+     */
+    public Player(int initialCoins) {
+        this.wallet = initialCoins;
+    }
 
     /**
      * Changes the player's wallet balance by the specified amount.
@@ -55,26 +54,28 @@ public class Player {
         ArrayList<Action.Types> correctActions = new ArrayList<>();
         System.out.println(influences);
         for (Character influence : influences) {
-            System.out.println(influence.canAct);
-            correctActions.add(influence.canAct);
+            System.out.println(influence);
+            Action.Types actionType = influence.canAct();
+            System.out.println(actionType);
+            correctActions.add(actionType);
         }
+
         if (wallet >= 7) {
             return new ArrayList<>(List.of(Action.Types.COUP));
         } else if (isCorrectAction) {
             availableActions.addAll(correctActions);
             System.out.println("else if (isCorrectAction)");
             System.out.println(availableActions);
-
         } else {
             for (Action.Types element : Action.Types.values()) {
-                if (!(availableActions.contains(element) || correctActions.contains(element) || element != Action.Types.COUP)) {
+                if (!(availableActions.contains(element) || correctActions.contains(element) || element == Action.Types.COUP)) {
                     availableActions.add(element);
                 }
             }
         }
-
         return availableActions;
     }
+
 
 
     /**

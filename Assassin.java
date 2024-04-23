@@ -13,7 +13,10 @@ public class Assassin extends Character {
     }
 
     // Determines the action type this character can perform
-    Action.Types canAct = Action.Types.ASSASSINATE;
+    public Action.Types canAct () {
+        System.out.println(Action.Types.ASSASSINATE);
+        return Action.Types.ASSASSINATE;
+    }
 
 //    public void action(Player player) {
 //        if (player.getCoins() >= 3) {
