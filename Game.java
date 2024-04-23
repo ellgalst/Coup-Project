@@ -55,7 +55,7 @@ public class Game {
 
          ArrayList<Player> playerList = new ArrayList<Player>(numberOfPlayers);
 
-         System.out.println("Enter the name for the human-controlled player: ");
+         System.out.println("Enter your name: ");
          String playerName = userInput.nextLine();
          Player humanPlayer = new Player(2, true);
          humanPlayer.setName(playerName);

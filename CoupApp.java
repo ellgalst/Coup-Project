@@ -17,27 +17,30 @@ public class CoupApp {
 
         while (myGame.isNotOver()) {
             for (Player player : myGame.players) {
-                if (player.isHuman) {
-                    System.out.println("Do you want to cheat? Answer yes or no!");
-                    String isCorrectAction = userInput.nextLine();
-                    ArrayList<Action.Types> availableActions;
-                    if (isCorrectAction.equalsIgnoreCase("no")) {
-                        availableActions = player.getAvailableActions(true);
-                    } else if (isCorrectAction.equalsIgnoreCase("yes")) {
-                        availableActions = player.getAvailableActions(false);
-                    }
-                    // handle this later
-                    else {
-                        System.out.println("Not sure what you typed. Try again.");
-                    }
+                boolean correctAnswer = false;
+                while(!correctAnswer) {
+                    if (player.isHuman) {
+                        System.out.println("Do you want to cheat? Answer yes or no!");
+                        String isCorrectAction = userInput.nextLine();
+                        ArrayList<Action.Types> availableActions;
+                        if (isCorrectAction.equalsIgnoreCase("no")) {
+                            availableActions = player.getAvailableActions(true);
+                            correctAnswer = true;
+                        } else if (isCorrectAction.equalsIgnoreCase("yes")) {
+                            availableActions = player.getAvailableActions(false);
+                            correctAnswer = true;
+                        } else {
+                            System.out.println("Not sure what you typed. Try again.");
+                            continue;
+                        }
 
-                    System.out.println(player.getName() + "'s available actions: " + availableActions);
-                    System.out.println(player.getUserAction(availableActions));
+                        System.out.println(player.getName() + "'s available actions: " + availableActions);
+                        System.out.println(player.getUserAction(availableActions));
 
-                }
-                else {
-                    ArrayList<Action.Types> availableActions = player.getAvailableActions(false);
-                    // random controlled players
+                    } else {
+                        ArrayList<Action.Types> availableActions = player.getAvailableActions(false);
+                        // random controlled players
+                    }
                 }
             }
         }

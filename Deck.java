@@ -1,5 +1,5 @@
 /**
- * A separate class to keep track of the deck cards.
+ * A separate class to keep track of the deck cards with the use of randomizer.
  */
 import java.util.ArrayList;
 import java.util.Random;

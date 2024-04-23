@@ -31,19 +31,4 @@ public abstract class Character{
     }
 
     public abstract Action.Types canAct();
-
-//
-//    public abstract void action(Player player, Game game);
-//    public boolean block(Action.Types action){
-//        return false;
-//    }
-//
-//    public abstract boolean isBlockable(Action.Types action);
-//    public String getName(){
-//        return name;
-//    }
-//    public String getDescription(){
-//        return description;
-//    }
-
 }
