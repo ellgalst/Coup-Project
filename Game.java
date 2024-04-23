@@ -16,7 +16,6 @@ public class Game {
     /**
      * The deck of cards used in the game.
      */
-    Deck myDeck = new Deck();
 
     /**
      * Initializes a new game with the specified number of players.
@@ -55,7 +54,7 @@ public class Game {
 
          ArrayList<Player> playerList = new ArrayList<Player>(numberOfPlayers);
 
-         System.out.println("Enter the name for the human-controlled player: ");
+         System.out.println("Enter your name: ");
          String playerName = userInput.nextLine();
          Player humanPlayer = new Player(2, true);
          humanPlayer.setName(playerName);
@@ -64,9 +63,7 @@ public class Game {
         for (int i = 0; i < numberOfPlayers - 1; i++) {
             playerList.add(new Player(2, false));
         }
-
         Deck myDeck = new Deck();
-        ArrayList<Character> gameCards = myDeck.initializeDeck();
         players = myDeck.distributeCards(playerList);
 
         for (Player player : players) {

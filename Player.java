@@ -17,21 +17,27 @@ public class Player {
      */
     private int theNumberOfInfluences;
     private String playerName;
+    public boolean isHuman;
     public String getName() {
         return playerName;
     }
     public void setName(String update) {
         playerName = update;
-    }
-    public boolean isHuman;
 
+
+    }
     /**
-     * Initializes a player with the specified initial number of coins in their wallet.
+     * Constructor method.
+     * Initializes a player with the specified initial number of coins in their wallet. If the player is a bot
+     * initializes its name.
      * @param initialCoins The initial number of coins in the player's wallet.
      */
     public Player(int initialCoins, boolean isHuman) {
         this.wallet = initialCoins;
         this.isHuman = isHuman;
+        if(!isHuman){
+            playerName = "BOT";
+        }
     }
 
     /**
@@ -57,6 +63,8 @@ public class Player {
      * @param isCorrectAction True if the player wishes to be honest, false if they wish to cheat.
      * @return The list of available actions for the player.
      */
+
+    // add assasination logic
     public ArrayList<Action.Types> getAvailableActions(boolean isCorrectAction) {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
@@ -87,6 +95,13 @@ public class Player {
         return availableActions;
     }
 
+    /**
+     * A method to return the action user wants to do from the given list of available actions.
+     * @param availableActions arrayList of available actions.
+     * @return action the user wants to do.
+     */
+
+    //either create another method for handling the choice, if you can make a generic method
     public Action.Types getUserAction(ArrayList<Action.Types> availableActions) {
         Scanner userInput = new Scanner(System.in);
         int actionIndex;
@@ -114,7 +129,6 @@ public class Player {
         }
 
     }
-
 
 
     /**

@@ -1,5 +1,5 @@
 /**
- * A separate class to keep track of the deck cards.
+ * A separate class to keep track of the deck cards with the use of randomizer.
  */
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,31 +12,40 @@ public class Deck {
     /**
      * Arraylist to store the current cards in the deck.
      */
-    ArrayList<Character> currentCards = new ArrayList<Character>(cardCount);
+    public static ArrayList<Character> deck = new ArrayList<Character>(cardCount);
+    
 
     /**
+     * No-arg constructor
      * Initializes the deck with the default set of cards.
      *
      * @return The arraylist of initialized cards.
      */
-    public ArrayList<Character> initializeDeck() {
+    public Deck() {
         for (int i = 0; i < 3; i++) {
-            currentCards.add(new Ambassador());
+            deck.add(new Ambassador());
         }
         for (int i = 0; i < 3; i++) {
-            currentCards.add(new Assassin());
+            deck.add(new Assassin());
         }
         for (int i = 0; i < 3; i++) {
-            currentCards.add(new Captain());
+            deck.add(new Captain());
         }
         for (int i = 0; i < 3; i++) {
-            currentCards.add(new Contessa());
+            deck.add(new Contessa());
         }
         for (int i = 0; i < 3; i++) {
-            currentCards.add(new Duke());
+            deck.add(new Duke());
         }
-        return currentCards;
     }
+
+    /**
+     * Accessor method
+     */
+    public ArrayList<Character> getDeck(){
+        return new ArrayList<>(deck);
+    }
+
 
     /**
      * Randomly selects a specified number of cards from the given deck.
@@ -45,7 +54,7 @@ public class Deck {
      * @param count The number of cards to select.
      * @return The arraylist of randomly selected cards.
      */
-    public ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
+    public static ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
         Random rn = new Random();
 
         if (count >= deck.size()) {
@@ -72,7 +81,7 @@ public class Deck {
      */
      public ArrayList<Player> distributeCards(ArrayList<Player> currentPlayers) {
         for (Player player : currentPlayers){
-            player.influences = randomizer(this.currentCards, 2);
+            player.influences = randomizer(this.deck, 2);
         }
         return currentPlayers;
     }
