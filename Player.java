@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * A separate class to keep track of all players.
@@ -84,6 +85,35 @@ public class Player {
             }
         }
         return availableActions;
+    }
+
+    Action.Types getUserAction(ArrayList<Action.Types> availableActions) {
+        Scanner userInput = new Scanner(System.in);
+        int actionIndex;
+
+        System.out.println("Available actions: ");
+        for (int i = 0; i < availableActions.size(); i++) {
+            System.out.println("The action behind index " + i + " is: " + availableActions.get(i));
+        }
+
+
+        while (true) {
+            System.out.print("Enter an index for the preferred action: ");
+            if (userInput.hasNextInt()) {
+                actionIndex = userInput.nextInt();
+                if (actionIndex >= 0 && actionIndex < availableActions.size()) {
+                    return availableActions.get(actionIndex);
+                }
+                else {
+                    System.out.println("Please, enter a number within the range of the provided actions.");
+                }
+            }
+            else {
+                System.out.println("Please enter a number!");
+                userInput.next();
+            }
+        }
+
     }
 
 

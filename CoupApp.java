@@ -9,6 +9,7 @@ public class CoupApp {
      */
     public static void main(final String[] args) throws InvalidNumberOfPlayers {
         Scanner userInput = new Scanner(System.in);
+        System.out.println("Enter a number from 2 to 7, which will be the number of players you want to play today!");
         int numberOfPlayers = userInput.nextByte();
 
         Game myGame = new Game(numberOfPlayers);
@@ -17,9 +18,21 @@ public class CoupApp {
         while (myGame.isNotOver()) {
             for (Player player : myGame.players) {
                 if (player.isHuman) {
-                    ArrayList<Action.Types> availableActions = player.getAvailableActions(true);
+                    System.out.println("Do you want to cheat? Answer yes or no!");
+                    String isCorrectAction = userInput.nextLine();
+                    ArrayList<Action.Types> availableActions;
+                    if (isCorrectAction.equalsIgnoreCase("no")) {
+                        availableActions = player.getAvailableActions(true);
+                    } else if (isCorrectAction.equalsIgnoreCase("yes")) {
+                        availableActions = player.getAvailableActions(false);
+                    }
+                    // handle this later
+                    else {
+                        System.out.println("Not sure what you typed. Try again.");
+                    }
+
                     System.out.println(player.getName() + "'s available actions: " + availableActions);
-                    // user input handling
+                    System.out.println(player.getUserAction(availableActions));
 
                 }
                 else {
