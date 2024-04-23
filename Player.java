@@ -87,7 +87,7 @@ public class Player {
         return availableActions;
     }
 
-    Action.Types getUserAction(ArrayList<Action.Types> availableActions) {
+    public Action.Types getUserAction(ArrayList<Action.Types> availableActions) {
         Scanner userInput = new Scanner(System.in);
         int actionIndex;
 
@@ -95,7 +95,6 @@ public class Player {
         for (int i = 0; i < availableActions.size(); i++) {
             System.out.println("The action behind index " + i + " is: " + availableActions.get(i));
         }
-
 
         while (true) {
             System.out.print("Enter an index for the preferred action: ");
