@@ -35,7 +35,8 @@ public class CoupApp {
                         }
 
                         System.out.println(player.getName() + "'s available actions: " + availableActions);
-                        System.out.println(player.getUserAction(availableActions));
+                        System.out.println(player.getUserChoice(availableActions));
+
 
                     } else {
                         ArrayList<Action.Types> availableActions = player.getAvailableActions(false);
@@ -46,9 +47,4 @@ public class CoupApp {
         }
 
     }
-
-    }
-
-    // the Scanner class, for the user to play the game. for the action, we will need the will to cheat or not (true or false)
-    // and the index from the available actions (need exception, while loop)
-    // for the challenge, ask the all the users, except the current one if they want to challenge that current player (true or false)
+}

@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
  * Represents the various actions that can be taken in the coup game
  */
@@ -34,11 +31,13 @@ public class Action {
     public void PerformExchange(Player player) {
         System.out.println("What 2 Influences would you like to keep from these: ");
         player.influences.addAll(Deck.randomizer(Deck.deck, 2));
-        int[] chosenIndices = null;
         if(player.isHuman){
-            //influences should be seen here and the user chooses two influences HERE
-            Deck.deck.add(player.influences.remove(chosenIndices[0]));
-            Deck.deck.add(player.influences.remove(chosenIndices[1]));
+            Character choice = player.getUserChoice(player.influences);
+            player.influences.remove(choice);
+            Deck.deck.add(choice);
+            choice = player.getUserChoice(player.influences);
+            player.influences.remove(choice);
+            Deck.deck.add(choice);
         }
         else {
             player.influences.remove(Deck.randomizer(player.influences, 1).getFirst());
@@ -91,7 +90,6 @@ public class Action {
         player1.wallet -= 7;
         player2.influences.remove(Deck.randomizer(player2.influences, 1));
     }
-
 
 }
 

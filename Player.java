@@ -63,8 +63,6 @@ public class Player {
      * @param isCorrectAction True if the player wishes to be honest, false if they wish to cheat.
      * @return The list of available actions for the player.
      */
-
-    // add assasination logic
     public ArrayList<Action.Types> getAvailableActions(boolean isCorrectAction) {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
@@ -75,6 +73,10 @@ public class Player {
         for (Character influence : influences) {
             System.out.println(influence);
             Action.Types actionType = influence.canAct();
+            if (actionType == Action.Types.ASSASSINATE && wallet >= 3) {
+                System.out.println(actionType);
+                correctActions.add(actionType);
+            }
             System.out.println(actionType);
             correctActions.add(actionType);
         }
@@ -91,32 +93,35 @@ public class Player {
                     availableActions.add(element);
                 }
             }
+            if (!correctActions.contains(Action.Types.ASSASSINATE) && wallet >= 3) {
+                availableActions.add(Action.Types.ASSASSINATE);
+            }
         }
         return availableActions;
     }
 
     /**
      * A method to return the action user wants to do from the given list of available actions.
-     * @param availableActions arrayList of available actions.
+     * @param available arrayList of available actions.
      * @return action the user wants to do.
      */
 
-    //either create another method for handling the choice, if you can make a generic method
-    public Action.Types getUserAction(ArrayList<Action.Types> availableActions) {
+    //either create another method for handling the choice, if you can, make a generic method
+/*    public Action.Types getUserAction(ArrayList<Action.Types> available) {
         Scanner userInput = new Scanner(System.in);
         int actionIndex;
 
         System.out.println("Available actions: ");
-        for (int i = 0; i < availableActions.size(); i++) {
-            System.out.println("The action behind index " + i + " is: " + availableActions.get(i));
+        for (int i = 0; i < available.size(); i++) {
+            System.out.println("The action behind index " + i + " is: " + available.get(i));
         }
 
         while (true) {
             System.out.print("Enter an index for the preferred action: ");
             if (userInput.hasNextInt()) {
                 actionIndex = userInput.nextInt();
-                if (actionIndex >= 0 && actionIndex < availableActions.size()) {
-                    return availableActions.get(actionIndex);
+                if (actionIndex >= 0 && actionIndex < available.size()) {
+                    return available.get(actionIndex);
                 }
                 else {
                     System.out.println("Please, enter a number within the range of the provided actions.");
@@ -128,6 +133,33 @@ public class Player {
             }
         }
 
+    }*/
+
+    public <T> T getUserChoice(ArrayList<T> available) {
+        Scanner userInput = new Scanner(System.in);
+        int index;
+
+        System.out.println("Available: ");
+        for (int i = 0; i < available.size(); i++) {
+            System.out.println("The item behind index " + i + " is: " + available.get(i));
+        }
+
+        while (true) {
+            System.out.print("Enter an index for the preferred item: ");
+            if (userInput.hasNextInt()) {
+                index = userInput.nextInt();
+                if (index >= 0 && index < available.size()) {
+                    return available.get(index);
+                }
+                else {
+                    System.out.println("Please, enter a number within the range of the provided items.");
+                }
+            }
+            else {
+                System.out.println("Please enter a NUMBER!");
+                userInput.next();
+            }
+        }
     }
 
 
