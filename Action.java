@@ -48,7 +48,7 @@ public class Action {
      * Method that implements taxation action of card Duke
      */
     public static void performTax(Player player) {
-        player.wallet+=3;
+        player.changeWallet(3);
     }
 
     /**
@@ -77,13 +77,13 @@ public class Action {
      * that can steal coins from other players
      */
     public static void performSteal(Player player1, Player player2){
-        if(player2.wallet<2){
-            player1.wallet+=player2.wallet;
-            player2.wallet = 0;
+        if(player2.getWallet()<2){
+            player1.changeWallet(player2.getWallet());
+            player2.changeWallet(-player2.getWallet());
         }
         else {
-            player2.wallet -= 2;
-            player1.wallet += 2;
+            player2.changeWallet(-2);
+            player1.changeWallet(2);
         }
     }
 
@@ -93,28 +93,28 @@ public class Action {
      */
     public static void performAssassinate(Player player1, Player player2){
         player2.influences.remove(Deck.randomizer(player2.influences, 1).getFirst());
-        player1.wallet -= 3;
+        player1.changeWallet(-3);
     }
 
     /**
      * Method Income that collects one coin from the bank
      */
     public static void performIncome(Player player){
-        player.wallet+=1;
+        player.changeWallet(1);
     }
 
     /**
      * Method ForeignAid that collects two coins from the bank
      */
     public static void performForeignAid(Player player){
-        player.wallet+=2;
+        player.changeWallet(2);
     }
 
     /**
      * Method that cause a player to give up an influence
      */
     public static void performCoup(Player player1, Player player2){
-        player1.wallet -= 7;
+        player1.changeWallet(-7);
         player2.influences.remove(Deck.randomizer(player2.influences, 1).getFirst());
     }
 

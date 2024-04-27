@@ -14,21 +14,18 @@ public class Game {
      * The total number of players in the game.
      */
     public int numberOfPlayers;
-    /**
-     * The deck of cards used in the game.
-     */
-
+    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Tom", "Maddy", "Dima", "Larisa"};
     /**
      * Initializes a new game with the specified number of players.
      *
      * @param numberOfPlayers The number of players in the game.
      */
-    Game(int numberOfPlayers) {
+    public Game(int numberOfPlayers) {
         super();
         this.numberOfPlayers = numberOfPlayers;
         this.players = new ArrayList<Player>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.players.add(new Player(2, false));
+            this.players.add(new Player(defaultNamesForPlayers[i],2, false));
         }
     }
 
@@ -67,12 +64,12 @@ public class Game {
 
          System.out.println("Enter your name: ");
          String playerName = userInput.nextLine();
-         Player humanPlayer = new Player(2, true);
+         Player humanPlayer = new Player(playerName,2, true);
          humanPlayer.setName(playerName);
          playerList.add(humanPlayer);
 
         for (int i = 0; i < numberOfPlayers - 1; i++) {
-            playerList.add(new Player(2, false));
+            playerList.add(new Player(defaultNamesForPlayers[i],2, false));
         }
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);

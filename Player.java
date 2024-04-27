@@ -8,7 +8,7 @@ public class Player {
     /**
      * The initial number of coins in the player's wallet.
      */
-    public int wallet;
+    private int wallet;
     /**
      * The number of character influences (cards) the player possesses.
      */
@@ -22,15 +22,14 @@ public class Player {
     public void setName(String update) {
         playerName = update;
     }
-
-    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Tom", "Maddy", "Dima", "Larisa"};
     /**
      * Constructor method.
      * Initializes a player with the specified initial number of coins in their wallet. If the player is a bot
      * initializes its name.
      * @param initialCoins The initial number of coins in the player's wallet.
      */
-    public Player(int initialCoins, boolean isHuman) {
+    public Player(String playerName, int initialCoins, boolean isHuman) {
+        this.playerName = playerName;
         this.wallet = initialCoins;
         this.isHuman = isHuman;
         if(!isHuman){
@@ -45,6 +44,10 @@ public class Player {
      */
     public void changeWallet(int update) {
         this.wallet += update;
+    }
+
+    public int getWallet () {
+        return wallet;
     }
     /**
      * Retrieves the number of character influences (cards) the player possesses.
