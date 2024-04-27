@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -38,6 +39,16 @@ public class Game {
      */
     public boolean isNotOver() {
         return players.size() != 1;
+    }
+
+    public Player choosePlayerFromBots(ArrayList<Player> players, Random random) {
+        ArrayList<Player> possibleChallengers = new ArrayList<Player>();
+        for (Player player : players) {
+            if (!player.isHuman && player.getTheNumberOfInfluences() == 2) {
+                possibleChallengers.add(player);
+            }
+        }
+        return possibleChallengers.get(random.nextInt(possibleChallengers.size()));
     }
 
     /**

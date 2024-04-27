@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 // the main class to run the project
 public class CoupApp {
@@ -11,6 +12,8 @@ public class CoupApp {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter a number from 2 to 7, which will be the number of players you want to play today!");
         int numberOfPlayers = userInput.nextByte();
+        final double CHALLENGE_PROBABILITY = 0.5;
+        Random random = new Random();
 
         Game myGame = new Game(numberOfPlayers);
         myGame.start();
@@ -24,10 +27,12 @@ public class CoupApp {
                         String isCorrectAction = userInput.nextLine();
                         ArrayList<Action.Types> availableActions;
                         if (isCorrectAction.equalsIgnoreCase("no")) {
-                            availableActions = player.getAvailableActions(true);
+                            player.cheat = false;
+                            availableActions = player.getAvailableActions();
                             correctAnswer = true;
                         } else if (isCorrectAction.equalsIgnoreCase("yes")) {
-                            availableActions = player.getAvailableActions(false);
+                            player.cheat = true;
+                            availableActions = player.getAvailableActions();
                             correctAnswer = true;
                         } else {
                             System.out.println("Not sure what you typed. Try again.");
@@ -35,11 +40,30 @@ public class CoupApp {
                         }
 
                         System.out.println(player.getName() + "'s available actions: " + availableActions);
-                        System.out.println(player.getUserChoice(availableActions));
+                        Action.Types chosenAction = player.getUserChoice(availableActions);
+                        System.out.println(chosenAction);
+                        Player target = null;
 
+                        if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
+                            System.out.println("Please, choose the player you want to perform the action on: ");
+                            System.out.println(myGame.players);
+                            target = player.getUserChoice(myGame.players);
+                        }
+
+                        System.out.println(player.getName() + " wants to perform " + chosenAction + "!");
+                        if (random.nextDouble() >= CHALLENGE_PROBABILITY) {
+                            Player challenger = myGame.choosePlayerFromBots(myGame.players, random);
+                            System.out.println(challenger.getName() + " decided to challenge " + player.getName() + ".");
+                            if (!challenger.challenge(player, Deck.deck, chosenAction)) {
+                                Action.performAction(player, chosenAction, target);
+                            }
+                        }
+                        // here will be implemented the logic of "blocking"
+
+                        // turn is going to the next player
 
                     } else {
-                        ArrayList<Action.Types> availableActions = player.getAvailableActions(false);
+                        ArrayList<Action.Types> availableActions = player.getAvailableActions();
                         // random controlled players
                     }
                 }

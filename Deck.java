@@ -59,7 +59,7 @@ public class Deck {
 
         if (count >= deck.size()) {
             System.out.println("Count cannot be greater than or equal to the size of the deck.");
-            return null;
+            return new ArrayList<>();
         }
 
         ArrayList<Character> randomCharacters = new ArrayList<Character>(count);

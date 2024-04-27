@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * A separate class to keep track of all players.
@@ -18,14 +15,15 @@ public class Player {
     private int theNumberOfInfluences;
     private String playerName;
     public boolean isHuman;
+    public boolean cheat;
     public String getName() {
         return playerName;
     }
     public void setName(String update) {
         playerName = update;
-
-
     }
+
+    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Tom", "Maddy", "Dima", "Larisa"};
     /**
      * Constructor method.
      * Initializes a player with the specified initial number of coins in their wallet. If the player is a bot
@@ -60,10 +58,9 @@ public class Player {
     /**
      * Gets the actions available to the player based on their wish to cheat or be honest.
      *
-     * @param isCorrectAction True if the player wishes to be honest, false if they wish to cheat.
      * @return The list of available actions for the player.
      */
-    public ArrayList<Action.Types> getAvailableActions(boolean isCorrectAction) {
+    public ArrayList<Action.Types> getAvailableActions() {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
                 Action.Types.INCOME
@@ -83,9 +80,8 @@ public class Player {
 
         if (wallet >= 7) {
             return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
-        } else if (isCorrectAction) {
+        } else if (!cheat) {
             availableActions.addAll(correctActions);
-            System.out.println("else if (isCorrectAction)");
             System.out.println(availableActions);
         } else {
             for (Action.Types element : Action.Types.values()) {
@@ -132,16 +128,26 @@ public class Player {
         }
     }
 
-
     /**
      * Challenges another player's action.
-     *
-     * @param other The player whose action is being challenged.
-     * @return True if the challenge is successful, false otherwise.
      */
-    public boolean challenge(Player other) {
-        return false;
+    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types type) {
+        if (playerToChallenge.cheat) {
+            playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
+            System.out.println("Congratulations, " + this.playerName + "! You won the challenge!");
+            return false;
+        }
+        else {
+            this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
+            if (playerToChallenge.influences.getFirst().canAct() == type) {
+                playerToChallenge.influences.removeFirst();
+            } else {
+                playerToChallenge.influences.removeLast();
+            }
+            System.out.println("Congratulations, " + playerToChallenge.playerName + "! You won the challenge!");
+            playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
+            return true;
+        }
     }
-
 
 }
