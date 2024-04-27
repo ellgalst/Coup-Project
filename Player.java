@@ -105,36 +105,6 @@ public class Player {
      * @param available arrayList of available actions.
      * @return action the user wants to do.
      */
-
-    //either create another method for handling the choice, if you can, make a generic method
-/*    public Action.Types getUserAction(ArrayList<Action.Types> available) {
-        Scanner userInput = new Scanner(System.in);
-        int actionIndex;
-
-        System.out.println("Available actions: ");
-        for (int i = 0; i < available.size(); i++) {
-            System.out.println("The action behind index " + i + " is: " + available.get(i));
-        }
-
-        while (true) {
-            System.out.print("Enter an index for the preferred action: ");
-            if (userInput.hasNextInt()) {
-                actionIndex = userInput.nextInt();
-                if (actionIndex >= 0 && actionIndex < available.size()) {
-                    return available.get(actionIndex);
-                }
-                else {
-                    System.out.println("Please, enter a number within the range of the provided actions.");
-                }
-            }
-            else {
-                System.out.println("Please enter a number!");
-                userInput.next();
-            }
-        }
-
-    }*/
-
     public <T> T getUserChoice(ArrayList<T> available) {
         Scanner userInput = new Scanner(System.in);
         int index;
