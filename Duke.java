@@ -20,18 +20,8 @@ public class Duke extends Character{
         return Action.Types.TAX;
     }
 
-//    @Override
-//    public void action(Player player, Action action){
-//        action.tax(player);
-//    }
-//
-//    @Override
-//    public boolean block(){
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean isBlockable(Action.Types action){
-//        return true;
-//    }
+    @Override
+    public Action.Types canBlock() {
+        return Action.Types.FOREIGNAID;
+    }
 }

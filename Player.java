@@ -132,7 +132,11 @@ public class Player {
     }
 
     /**
-     * Challenges another player's action.
+     * A method to challenge another player's action.
+     * @param playerToChallenge player to challenge.
+     * @param myDeck the deck.
+     * @param type action type.
+     * @return
      */
     public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types type) {
         if (playerToChallenge.cheat) {
@@ -152,5 +156,7 @@ public class Player {
             return true;
         }
     }
+
+
 
 }

@@ -44,6 +44,11 @@ public class Action {
         }
     }
 
+    public boolean isBlockable(Types actionType){
+        return actionType == Types.FOREIGNAID || actionType == Types.ASSASSINATE || actionType == Types.STEAL;
+
+    }
+
     /**
      * Method that implements taxation action of card Duke
      */

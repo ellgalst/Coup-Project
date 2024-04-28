@@ -17,18 +17,8 @@ public class Captain extends Character {
         return Action.Types.STEAL;
     }
 
-//    @Override
-//    public void action(Player player) {
-//        Action.stealCoins(player);
-//    }
-//
-//    @Override
-//    public boolean block(Action.Types action) {
-//        return action == Action.Types.STEAL;
-//    }
-//
-//    @Override
-//    public boolean isBlockable(Action.Types action) {
-//        return true;
-//    }
+    @Override
+    public Action.Types canBlock() {
+        return Action.Types.STEAL;
+    }
 }

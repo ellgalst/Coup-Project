@@ -16,18 +16,8 @@ public class Contessa extends Character{
         return null;
     }
 
-//    @Override
-//    public void action(Player player){
-//
-//    }
-//
-//    @Override
-//    public boolean block(Action.Types action){
-//        return action == Action.Types.ASSASSINATE;
-//    }
-//
-//    @Override
-//    public boolean isBlockable(Action.Types action){
-//        return false;
-//    }
+    @Override
+    public Action.Types canBlock() {
+        return Action.Types.ASSASSINATE;
+    }
 }

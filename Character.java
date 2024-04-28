@@ -31,4 +31,5 @@ public abstract class Character{
     }
 
     public abstract Action.Types canAct();
+    public abstract Action.Types canBlock();
 }

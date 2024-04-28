@@ -18,19 +18,8 @@ public class Assassin extends Character {
         return Action.Types.ASSASSINATE;
     }
 
-//    public void action(Player player) {
-//        if (player.getCoins() >= 3) {
-//            player.changeCoins(-3);
-//            Action.assasinate(player);
-//        }
-//    }
-
-//    public boolean block(Action.Types action) {
-//        return action == Action.Types.ASSASSINATE;
-//    }
-//
-//    @Override
-//    public boolean isBlockable(Action.Types action) {
-//        return true;
-//    }
+    @Override
+    public Action.Types canBlock() {
+        return null;
+    }
 }

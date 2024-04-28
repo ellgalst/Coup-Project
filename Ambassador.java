@@ -16,18 +16,10 @@ public class Ambassador extends Character {
         return Action.Types.EXCHANGE;
     }
 
-//    @Override
-//    public void action(Player player, Action action) {
-//        action.exchange(player);
-//    }
-//
-//    @Override
-//    public boolean block(Action.Types action) {
-//        return action == Action.Types.STEAL;
-//    }
-//
-//    @Override
-//    public boolean isBlockable(Action.Types action) {
-//        return false;
-//    }
+    @Override
+    public Action.Types canBlock(){
+        return Action.Types.STEAL;
+    }
+
+
 }
