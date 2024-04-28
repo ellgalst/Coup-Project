@@ -43,7 +43,7 @@ public class CoupApp {
                         System.out.println(player.getName() + "'s available actions: " + availableActions);
                         Action.Types chosenAction = player.getUserChoice(availableActions);
                         System.out.println(chosenAction);
-                        Player target = null;
+                        Player target = new Player();
 
                         if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
                             System.out.println("Please, choose the player you want to perform the action on: ");
@@ -53,52 +53,20 @@ public class CoupApp {
 
                         System.out.println(player.getName() + " wants to perform " + chosenAction + "!");
                         if (random.nextDouble() >= CHALLENGE_PROBABILITY) {
-                            Player challenger = myGame.choosePlayerFromBots(myGame.players, random);
+                            Player challenger = myGame.choosePlayerFromBots(myGame.players);
                             System.out.println(challenger.getName() + " decided to challenge " + player.getName() + ".");
-                            if (challenger.challenge(player, Deck.deck, chosenAction)) {
+                            if (challenger.challenge(player, Deck.deck, chosenAction, true)) {
                                 System.out.println("You lost your turn:|");
                                 // change the turn
                             }
                         }
 
-                        // maybe we need a seperate method for blocking
-                        boolean cheat;
-                        if(random.nextDouble() >= BLOCK_PROBABILITY){
-                            if(player.influences.contains(target.influences.getFirst().canBlock())
-                                    ||player.influences.contains(target.influences.getLast().canBlock())){
-                                cheat = false;
+                        if(random.nextDouble() >= BLOCK_PROBABILITY) {
+                            if (!target.performBlock(player, Deck.deck, chosenAction, myGame, myGame.players)) {
+                                Action.performAction(player, chosenAction, target);
                             }
-                            else{
-                                cheat=true;
-                            }
-                            System.out.println("Do you want to challange " + target.getName()+"? ( yes/no )");
-                            String response = userInput.nextLine();
-                            if(response.equalsIgnoreCase("yes")){
-                                System.out.println(player.getName() + " decided to challenge "
-                                        + player.getName() + ".");
-                                if (player.challenge(target, Deck.deck, chosenAction)) {
-                                    System.out.println("You lost your turn:|");
-                                }
-                            }
-                            else{
-                                if (random.nextDouble() >= CHALLENGE_PROBABILITY) {
-                                    Player challenger = myGame.choosePlayerFromBots(myGame.players, random);
-                                    System.out.println(challenger.getName() + " decided to challenge " + player.getName() + ".");
-                                    if (challenger.challenge(player, Deck.deck, chosenAction)) {
-                                        //*******************challenge for block***********************
-                                        Action.performAction(player, chosenAction, target);
-                                    }
-                                    else{
-                                        // i lose my turn   **********challenge issues*******
-                                    }
-                                }
-                            }
-
                         }
-                        else{
-                            Action.performAction(player, chosenAction, target);
-                        }
-
+                        // next player's turn
 
 
                     } else {

@@ -22,6 +22,12 @@ public class Player {
     public void setName(String update) {
         playerName = update;
     }
+
+    public Player () {
+        this.playerName = "Catrin";
+        this.wallet = 2;
+        this.isHuman = false;
+    }
     /**
      * Constructor method.
      * Initializes a player with the specified initial number of coins in their wallet. If the player is a bot
@@ -56,6 +62,14 @@ public class Player {
      */
     public int getTheNumberOfInfluences() {
         return influences.size();
+    }
+
+    // override equals method. checks the equality based on the name of the player.
+    public boolean equals(Player other) {
+        if (other == null || !other.getClass().getSimpleName().equals("Player")) {
+            return false;
+        }
+        return this.getName().equals(other.getName());
     }
 
     /**
@@ -131,14 +145,8 @@ public class Player {
         }
     }
 
-    /**
-     * A method to challenge another player's action.
-     * @param playerToChallenge player to challenge.
-     * @param myDeck the deck.
-     * @param type action type.
-     * @return
-     */
-    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types type) {
+
+    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         if (playerToChallenge.cheat) {
             playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
             System.out.println("Congratulations, " + this.playerName + "! You won the challenge!");
@@ -146,17 +154,40 @@ public class Player {
         }
         else {
             this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
-            if (playerToChallenge.influences.getFirst().canAct() == type) {
-                playerToChallenge.influences.removeFirst();
-            } else {
-                playerToChallenge.influences.removeLast();
+            if (isActionChallenge) {
+                this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
+                if (playerToChallenge.influences.getFirst().canAct() == action) {
+                    playerToChallenge.influences.removeFirst();
+                } else {
+                    playerToChallenge.influences.removeLast();
+                }
+                playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
             }
             System.out.println("Congratulations, " + playerToChallenge.playerName + "! You won the challenge!");
-            playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
             return true;
         }
+
     }
 
+    public boolean performBlock (Player blocked, ArrayList<Character> myDeck, Action.Types action, Game myGame, ArrayList<Player> players) {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println(blocked.getName() + ", do you want to challenge " + this.getName() + "? Answer yes or no.");
+
+        if (userInput.nextLine().equalsIgnoreCase("yes")) {
+            System.out.println(blocked.getName() + " decided to challenge " + this.getName() + "'s block!");
+            return blocked.challenge(this, myDeck, action, false);
+        }
+        else {
+            Player challenger = myGame.choosePlayerFromBots(players);
+            if (!challenger.equals(this)) {
+                System.out.println(challenger.getName() + " decided to challenge " + this.getName() + "'s block!");
+                return blocked.challenge(challenger, myDeck, action, false);
+            }
+        }
+
+        System.out.println(this.getName() + " successfully blocked " + blocked.getName() + "'s action!");
+        return true;
+    }
 
 
 }

@@ -38,7 +38,8 @@ public class Game {
         return players.size() != 1;
     }
 
-    public Player choosePlayerFromBots(ArrayList<Player> players, Random random) {
+    public Player choosePlayerFromBots(ArrayList<Player> players) {
+        Random random = new Random();
         ArrayList<Player> possibleChallengers = new ArrayList<Player>();
         for (Player player : players) {
             if (!player.isHuman && player.getTheNumberOfInfluences() == 2) {
