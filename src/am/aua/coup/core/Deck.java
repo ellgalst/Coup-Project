@@ -3,6 +3,7 @@ package src.am.aua.coup.core; /**
  */
 import src.am.aua.coup.influences.*;
 import src.am.aua.coup.influences.Character;
+import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
 import java.util.Random;

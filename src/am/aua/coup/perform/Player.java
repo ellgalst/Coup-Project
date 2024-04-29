@@ -1,5 +1,8 @@
-package src.am.aua.coup.core;
+package src.am.aua.coup.perform;
 
+import src.am.aua.coup.core.Action;
+import src.am.aua.coup.core.Deck;
+import src.am.aua.coup.core.Game;
 import src.am.aua.coup.influences.Character;
 
 import java.util.*;
@@ -7,7 +10,9 @@ import java.util.*;
 /**
  * A separate class to keep track of all players.
  */
-public class Player {
+
+// MODIFY
+public class Player extends BasePerformer {
     ArrayList<Character> influences = new ArrayList<Character>(2);
     /**
      * The initial number of coins in the player's wallet.
@@ -16,7 +21,6 @@ public class Player {
     /**
      * The number of character influences (cards) the player possesses.
      */
-    private int theNumberOfInfluences;
     private String playerName;
     public boolean isHuman;
     public boolean cheat;
@@ -38,13 +42,11 @@ public class Player {
      * initializes its name.
      * @param initialCoins The initial number of coins in the player's wallet.
      */
+    // isHuman remove
     public Player(String playerName, int initialCoins, boolean isHuman) {
         this.playerName = playerName;
         this.wallet = initialCoins;
         this.isHuman = isHuman;
-        if(!isHuman){
-            playerName = "BOT";
-        }
     }
 
     /**
@@ -70,7 +72,7 @@ public class Player {
 
     // override equals method. checks the equality based on the name of the player.
     public boolean equals(Player other) {
-        if (other == null || !other.getClass().getSimpleName().equals("src.am.aua.coup.core.Player")) {
+        if (other == null || !other.getClass().getSimpleName().equals("src.am.aua.coup.perform.Player")) {
             return false;
         }
         return this.getName().equals(other.getName());

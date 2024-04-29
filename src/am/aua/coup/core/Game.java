@@ -1,7 +1,7 @@
 package src.am.aua.coup.core;
 
-import src.am.aua.coup.core.Deck;
 import src.am.aua.coup.exceptions.InvalidNumberOfPlayersException;
+import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
 import java.util.Random;

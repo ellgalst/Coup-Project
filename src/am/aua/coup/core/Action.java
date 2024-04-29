@@ -1,6 +1,7 @@
 package src.am.aua.coup.core;
 
 import src.am.aua.coup.influences.Character;
+import src.am.aua.coup.perform.Player;
 
 /**
  * Represents the various actions that can be taken in the coup game
