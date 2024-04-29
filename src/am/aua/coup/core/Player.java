@@ -1,3 +1,7 @@
+package src.am.aua.coup.core;
+
+import src.am.aua.coup.influences.Character;
+
 import java.util.*;
 
 /**
@@ -66,7 +70,7 @@ public class Player {
 
     // override equals method. checks the equality based on the name of the player.
     public boolean equals(Player other) {
-        if (other == null || !other.getClass().getSimpleName().equals("Player")) {
+        if (other == null || !other.getClass().getSimpleName().equals("src.am.aua.coup.core.Player")) {
             return false;
         }
         return this.getName().equals(other.getName());
@@ -77,21 +81,19 @@ public class Player {
      *
      * @return The list of available actions for the player.
      */
+
+    // assassinate
     public ArrayList<Action.Types> getAvailableActions() {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
                 Action.Types.INCOME
         ));
         ArrayList<Action.Types> correctActions = new ArrayList<>();
-        System.out.println(influences);
         for (Character influence : influences) {
-            System.out.println(influence);
             Action.Types actionType = influence.canAct();
             if (actionType == Action.Types.ASSASSINATE && wallet >= 3) {
-                System.out.println(actionType);
                 correctActions.add(actionType);
             }
-            System.out.println(actionType);
             correctActions.add(actionType);
         }
 
@@ -99,7 +101,6 @@ public class Player {
             return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
         } else if (!cheat) {
             availableActions.addAll(correctActions);
-            System.out.println(availableActions);
         } else {
             for (Action.Types element : Action.Types.values()) {
                 if (!(availableActions.contains(element) || correctActions.contains(element) || element == Action.Types.COUP)) {
@@ -110,6 +111,7 @@ public class Player {
                 availableActions.add(Action.Types.ASSASSINATE);
             }
         }
+        System.out.println(availableActions);
         return availableActions;
     }
 
@@ -143,6 +145,10 @@ public class Player {
                 userInput.next();
             }
         }
+    }
+
+    public String toString() {
+        return this.getName();
     }
 
 

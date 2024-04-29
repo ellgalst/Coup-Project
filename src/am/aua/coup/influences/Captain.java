@@ -1,11 +1,15 @@
+package src.am.aua.coup.influences;
+
+import src.am.aua.coup.core.Action;
+
 /**
- * A child class of Character.
+ * A child class of src.am.aua.coup.influences.Character.
  * action: to steal, which means to steal 2 coins from another player.
  * counterAction: to block stealing.
  */
 public class Captain extends Character {
     /**
-     * Initializes a Captain character with its name and description.
+     * Initializes a src.am.aua.coup.influences.Captain character with its name and description.
      */
     public Captain() {
         super("Captain", "Steals 2 coins from another player. Can block stealing.");
@@ -20,5 +24,10 @@ public class Captain extends Character {
     @Override
     public Action.Types canBlock() {
         return Action.Types.STEAL;
+    }
+
+    @Override
+    public String toString() {
+        return "Captain";
     }
 }

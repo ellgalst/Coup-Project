@@ -1,3 +1,8 @@
+package src.am.aua.coup.core;
+
+import src.am.aua.coup.core.Deck;
+import src.am.aua.coup.exceptions.InvalidNumberOfPlayersException;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -52,11 +57,11 @@ public class Game {
     /**
      * Starts the game.
      *
-     * @throws InvalidNumberOfPlayers If the number of players is invalid.
+     * @throws InvalidNumberOfPlayersException If the number of players is invalid.
      */
-     public void start() throws InvalidNumberOfPlayers {
+     public void start() throws InvalidNumberOfPlayersException {
         if (!(this.numberOfPlayers > 1 && this.numberOfPlayers <= 7)) {
-            throw new InvalidNumberOfPlayers();
+            throw new InvalidNumberOfPlayersException();
         }
 
          Scanner userInput = new Scanner(System.in);

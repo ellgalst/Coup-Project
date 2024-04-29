@@ -1,8 +1,10 @@
-public class InvalidNumberOfPlayers extends Exception {
+package src.am.aua.coup.exceptions;
+
+public class InvalidNumberOfPlayersException extends Exception {
     /**
      * Constructs a new InvalidNumberOfPlayers exception with a default error message.
      */
-    public InvalidNumberOfPlayers() {
+    public InvalidNumberOfPlayersException() {
         super("The number of players should be more than 1 and less than 7!");
     }
     /**
@@ -10,7 +12,7 @@ public class InvalidNumberOfPlayers extends Exception {
      *
      * @param newMessage The custom error message to be displayed.
      */
-    public InvalidNumberOfPlayers(String newMessage) {
+    public InvalidNumberOfPlayersException(String newMessage) {
         super(newMessage);
     }
 }

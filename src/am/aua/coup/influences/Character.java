@@ -1,5 +1,9 @@
+package src.am.aua.coup.influences;
+
+import src.am.aua.coup.core.Action;
+
 /**
- * This class is the default character. It is the parent of the main 5 characters. Every Character
+ * This class is the default character. It is the parent of the main 5 characters. Every src.am.aua.coup.influences.Character
  * has 3 main methods(+ some other helping methods): influence, action and counterAction.
  * influence: returns the character type.
  * action: a method to take an action with a corresponding effect.
@@ -20,7 +24,7 @@ public abstract class Character{
     public Action.Types canAct;
 
     /**
-     * Initializes a Character with its name and description.
+     * Initializes a src.am.aua.coup.influences.Character with its name and description.
      *
      * @param characterName The name of the character.
      * @param s          The description of the character.
@@ -32,4 +36,5 @@ public abstract class Character{
 
     public abstract Action.Types canAct();
     public abstract Action.Types canBlock();
+    public abstract String toString();
 }

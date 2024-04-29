@@ -1,6 +1,9 @@
-/**
+package src.am.aua.coup.core; /**
  * A separate class to keep track of the deck cards with the use of randomizer.
  */
+import src.am.aua.coup.influences.*;
+import src.am.aua.coup.influences.Character;
+
 import java.util.ArrayList;
 import java.util.Random;
 

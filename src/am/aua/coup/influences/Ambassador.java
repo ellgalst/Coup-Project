@@ -1,9 +1,12 @@
+package src.am.aua.coup.influences;
+import src.am.aua.coup.core.Action;
+
 /**
- * A child class of Character.
+ * A child class of src.am.aua.coup.influences.Character.
  */
 public class Ambassador extends Character {
     /**
-     * Initializes an Ambassador character with its name and description.
+     * Initializes a src.am.aua.coup.influences.Ambassador character with its name and description.
      */
     public Ambassador() {
         super("Ambassador", "Exchanges cards with the deck. Can block stealing.");
@@ -19,6 +22,11 @@ public class Ambassador extends Character {
     @Override
     public Action.Types canBlock(){
         return Action.Types.STEAL;
+    }
+
+    @Override
+    public String toString() {
+        return "Ambassador";
     }
 
 

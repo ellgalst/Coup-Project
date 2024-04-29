@@ -1,4 +1,6 @@
-import java.util.Objects;
+package src.am.aua.coup.core;
+
+import src.am.aua.coup.influences.Character;
 
 /**
  * Represents the various actions that can be taken in the coup game
@@ -50,7 +52,7 @@ public class Action {
     }
 
     /**
-     * Method that implements taxation action of card Duke
+     * Method that implements taxation action of card src.am.aua.coup.influences.Duke
      */
     public static void performTax(Player player) {
         player.changeWallet(3);
@@ -58,7 +60,7 @@ public class Action {
 
     /**
      * Method that draws 2 influences and
-     * puts 2 back of card Ambassador
+     * puts 2 back of card src.am.aua.coup.influences.Ambassador
      */
     public static void performExchange(Player player) {
         System.out.println("What 2 Influences would you like to keep from these: ");
@@ -78,7 +80,7 @@ public class Action {
     }
 
     /**
-     * Implements the action of influence Captain
+     * Implements the action of influence src.am.aua.coup.influences.Captain
      * that can steal coins from other players
      */
     public static void performSteal(Player player1, Player player2){
@@ -93,7 +95,7 @@ public class Action {
     }
 
     /**
-     * Method of card Assassin that forcing
+     * Method of card src.am.aua.coup.influences.Assassin that forcing
      * one player to give up influence
      */
     public static void performAssassinate(Player player1, Player player2){
