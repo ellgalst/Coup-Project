@@ -3,6 +3,7 @@ package src.am.aua.coup.core; /**
  */
 import src.am.aua.coup.influences.*;
 import src.am.aua.coup.influences.Character;
+import src.am.aua.coup.perform.BasePerformer;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
@@ -83,9 +84,9 @@ public class Deck {
      * @param currentPlayers The arraylist of players to whom cards will be distributed.
      * @return The arraylist of players with their respective cards.
      */
-     public ArrayList<Player> distributeCards(ArrayList<Player> currentPlayers) {
-        for (Player player : currentPlayers){
-            player.influences = randomizer(this.deck, 2);
+     public ArrayList<BasePerformer> distributeCards(ArrayList<BasePerformer> currentPlayers) {
+        for (BasePerformer player : currentPlayers){
+            player.setInfluences(randomizer(this.deck, 2));
         }
         return currentPlayers;
     }

@@ -14,26 +14,17 @@ import java.util.*;
 // MODIFY
 public class Player extends BasePerformer {
     ArrayList<Character> influences = new ArrayList<Character>(2);
-    /**
-     * The initial number of coins in the player's wallet.
-     */
-    private int wallet;
-    /**
-     * The number of character influences (cards) the player possesses.
-     */
-    private String playerName;
-    public boolean isHuman;
     public boolean cheat;
     public String getName() {
-        return playerName;
+        return super.getName();
     }
     public void setName(String update) {
-        playerName = update;
+        super.setName(update);
     }
 
     public Player () {
-        this.playerName = "Catrin";
-        this.wallet = 2;
+        super.setName("Pedro");
+        super.changeWallet(2);
         this.isHuman = false;
     }
     /**
@@ -44,30 +35,9 @@ public class Player extends BasePerformer {
      */
     // isHuman remove
     public Player(String playerName, int initialCoins, boolean isHuman) {
-        this.playerName = playerName;
-        this.wallet = initialCoins;
+        super.setName(playerName);
+        super.changeWallet(initialCoins);
         this.isHuman = isHuman;
-    }
-
-    /**
-     * Changes the player's wallet balance by the specified amount.
-     *
-     * @param update The amount by which to update the player's wallet balance.
-     */
-    public void changeWallet(int update) {
-        this.wallet += update;
-    }
-
-    public int getWallet () {
-        return wallet;
-    }
-    /**
-     * Retrieves the number of character influences (cards) the player possesses.
-     *
-     * @return The number of character influences (cards) the player possesses.
-     */
-    public int getTheNumberOfInfluences() {
-        return influences.size();
     }
 
     // override equals method. checks the equality based on the name of the player.
@@ -93,13 +63,13 @@ public class Player extends BasePerformer {
         ArrayList<Action.Types> correctActions = new ArrayList<>();
         for (Character influence : influences) {
             Action.Types actionType = influence.canAct();
-            if (actionType == Action.Types.ASSASSINATE && wallet >= 3) {
+            if (actionType == Action.Types.ASSASSINATE && super.getWallet() >= 3) {
                 correctActions.add(actionType);
             }
             correctActions.add(actionType);
         }
 
-        if (wallet >= 7) {
+        if (super.getWallet() >= 7) {
             return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
         } else if (!cheat) {
             availableActions.addAll(correctActions);
@@ -109,7 +79,7 @@ public class Player extends BasePerformer {
                     availableActions.add(element);
                 }
             }
-            if (!correctActions.contains(Action.Types.ASSASSINATE) && wallet >= 3) {
+            if (!correctActions.contains(Action.Types.ASSASSINATE) && super.getWallet() >= 3) {
                 availableActions.add(Action.Types.ASSASSINATE);
             }
         }
@@ -154,10 +124,10 @@ public class Player extends BasePerformer {
     }
 
 
-    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
+    public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         if (playerToChallenge.cheat) {
             playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
-            System.out.println("Congratulations, " + this.playerName + "! You won the challenge!");
+            System.out.println("Congratulations, " + super.getName() + "! You won the challenge!");
             return false;
         }
         else {
@@ -171,31 +141,12 @@ public class Player extends BasePerformer {
                 }
                 playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
             }
-            System.out.println("Congratulations, " + playerToChallenge.playerName + "! You won the challenge!");
+            System.out.println("Congratulations, " + playerToChallenge.getName() + "! You won the challenge!");
             return true;
         }
 
     }
 
-    public boolean performBlock (Player blocked, ArrayList<Character> myDeck, Action.Types action, Game myGame, ArrayList<Player> players) {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println(blocked.getName() + ", do you want to challenge " + this.getName() + "? Answer yes or no.");
-
-        if (userInput.nextLine().equalsIgnoreCase("yes")) {
-            System.out.println(blocked.getName() + " decided to challenge " + this.getName() + "'s block!");
-            return blocked.challenge(this, myDeck, action, false);
-        }
-        else {
-            Player challenger = myGame.choosePlayerFromBots(players);
-            if (!challenger.equals(this)) {
-                System.out.println(challenger.getName() + " decided to challenge " + this.getName() + "'s block!");
-                return blocked.challenge(challenger, myDeck, action, false);
-            }
-        }
-
-        System.out.println(this.getName() + " successfully blocked " + blocked.getName() + "'s action!");
-        return true;
-    }
 
 
 }

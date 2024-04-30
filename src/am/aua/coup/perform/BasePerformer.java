@@ -11,7 +11,6 @@ public abstract class BasePerformer {
     ArrayList<Character> influences = new ArrayList<Character>(2);
     private int wallet;
     private String name;
-    public boolean isHuman;
     public boolean cheat;
     public String getName() {
         return name;
@@ -26,8 +25,16 @@ public abstract class BasePerformer {
     public int getWallet () {
         return wallet;
     }
+    public ArrayList<Character> getInfluences(){
+        return influences;
+    }
+    public void setInfluences(ArrayList<Character> chars){
+        for(int i=0; i<influences.size(); i++){
+            influences.set(i, chars.get(i));
+        }
+    }
 
-    public int getTheNumberOfInfluences() {
+    public int getNumberOfInfluences(){
         return influences.size();
     }
     public ArrayList<Action.Types> getAvailableActions() {
@@ -43,6 +50,8 @@ public abstract class BasePerformer {
             }
             correctActions.add(actionType);
         }
+
+
 
         if (wallet >= 7) {
             return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
@@ -118,11 +127,13 @@ public abstract class BasePerformer {
     }
 
     // modify
-    public boolean performBlock (Player blocked, ArrayList<Character> myDeck, Action.Types action, Game myGame, ArrayList<Player> players) {
+    public boolean performBlock (BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action,
+                                 Game myGame, ArrayList<BasePerformer> players) {
+
+        // ********************************     fix this shit   *********************************
         Scanner userInput = new Scanner(System.in);
         System.out.println(blocked.getName() + ", do you want to challenge " + this.getName() + "? Answer yes or no.");
-
-        if (userInput.nextLine().equalsIgnoreCase("yes")) {
+        if (userInput.nextLine().equalsIgnoreCase("yes")){
             System.out.println(blocked.getName() + " decided to challenge " + this.getName() + "'s block!");
             return blocked.challenge(this, myDeck, action, false);
         }
