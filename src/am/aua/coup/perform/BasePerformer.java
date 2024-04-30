@@ -11,35 +11,74 @@ public abstract class BasePerformer {
     ArrayList<Character> influences = new ArrayList<Character>(2);
     private int wallet;
     private String name;
-    public boolean isHuman;
-    public boolean cheat;
-    public String getName() {
-        return name;
-    }
-    public void setName(String update) {
-        name = update;
-    }
-    public void changeWallet(int update) {
-        this.wallet += update;
-    }
+    private boolean cheat;
 
+
+    // accessors
+    public ArrayList<Character> getInfluences(){
+        return influences;
+    }
+    public int getNumberOfInfluences(){
+        return influences.size();
+    }
     public int getWallet () {
         return wallet;
     }
-
-    public int getTheNumberOfInfluences() {
-        return influences.size();
+    public String getName() {
+        return name;
     }
+    public boolean getCheat() {
+        return cheat;
+    }
+
+    // mutators
+    public void setInfluences(ArrayList<Character> chars){
+        for(int i=0; i<influences.size(); i++){
+            influences.set(i, chars.get(i));
+        }
+    }
+    public void setWallet(int coins) {
+        this.wallet = coins;
+    }
+
+    public void setName(String update) {
+        name = update;
+    }
+    public void setCheat(boolean value) {
+        this.cheat = value;
+    }
+
+    // override toString method for the more understandable output
+    public String toString() {
+        return this.getName();
+    }
+
+    // override equals method
+    public boolean equals(Object other) {
+        if (!(other instanceof BasePerformer otherObject)) {
+            return false;
+        }
+        return this.getClass() == other.getClass() && this.getName().equals(otherObject.getName());
+    }
+
+    /**
+     * Gets the actions available to the player based on their wish to cheat or be honest.
+     *
+     * @return The list of available actions for the player.
+     */
     public ArrayList<Action.Types> getAvailableActions() {
         ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
                 Action.Types.FOREIGNAID,
                 Action.Types.INCOME
         ));
+
         ArrayList<Action.Types> correctActions = new ArrayList<>();
         for (Character influence : influences) {
             Action.Types actionType = influence.canAct();
-            if (actionType == Action.Types.ASSASSINATE && wallet >= 3) {
-                correctActions.add(actionType);
+            if (actionType == Action.Types.ASSASSINATE) {
+                if (wallet >= 3) {
+                    correctActions.add(actionType);
+                }
             }
             correctActions.add(actionType);
         }
@@ -62,39 +101,10 @@ public abstract class BasePerformer {
         return availableActions;
     }
 
-    public <T> T getUserChoice(ArrayList<T> available) {
-        Scanner userInput = new Scanner(System.in);
-        int index;
-
-        System.out.println("Available: ");
-        for (int i = 0; i < available.size(); i++) {
-            System.out.println("The item behind index " + i + " is: " + available.get(i));
-        }
-
-        while (true) {
-            System.out.print("Enter an index for the preferred item: ");
-            if (userInput.hasNextInt()) {
-                index = userInput.nextInt();
-                if (index >= 0 && index < available.size()) {
-                    return available.get(index);
-                }
-                else {
-                    System.out.println("Please, enter a number within the range of the provided items.");
-                }
-            }
-            else {
-                System.out.println("Please enter a NUMBER!");
-                userInput.next();
-            }
-        }
-    }
-    public String toString() {
-        return this.getName();
-    }
 
 
-    // modify
-    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
+    public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
+                             boolean isActionChallenge) {
         if (playerToChallenge.cheat) {
             playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
@@ -114,28 +124,7 @@ public abstract class BasePerformer {
             System.out.println("Congratulations, " + playerToChallenge.getName() + "! You won the challenge!");
             return true;
         }
-
     }
 
-    // modify
-    public boolean performBlock (Player blocked, ArrayList<Character> myDeck, Action.Types action, Game myGame, ArrayList<Player> players) {
-        Scanner userInput = new Scanner(System.in);
-        System.out.println(blocked.getName() + ", do you want to challenge " + this.getName() + "? Answer yes or no.");
-
-        if (userInput.nextLine().equalsIgnoreCase("yes")) {
-            System.out.println(blocked.getName() + " decided to challenge " + this.getName() + "'s block!");
-            return blocked.challenge(this, myDeck, action, false);
-        }
-        else {
-            Player challenger = myGame.choosePlayerFromBots(players);
-            if (!challenger.equals(this)) {
-                System.out.println(challenger.getName() + " decided to challenge " + this.getName() + "'s block!");
-                return blocked.challenge(challenger, myDeck, action, false);
-            }
-        }
-
-        System.out.println(this.getName() + " successfully blocked " + blocked.getName() + "'s action!");
-        return true;
-    }
 
 }

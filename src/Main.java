@@ -35,7 +35,7 @@ public class Main {
                 boolean correctAnswer = false;
                 ArrayList<Action.Types> availableActions = null;
                 while (!correctAnswer) {
-                    if (player.isHuman) {
+                    if (player.getClass() == Player.class) {
                         System.out.println("Do you want to cheat? Answer yes or no!");
                         String isCorrectAction = userInput.next();
                         if (isCorrectAction.equalsIgnoreCase("no")) {

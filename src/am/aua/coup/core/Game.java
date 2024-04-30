@@ -1,6 +1,8 @@
 package src.am.aua.coup.core;
 
 import src.am.aua.coup.exceptions.InvalidNumberOfPlayersException;
+import src.am.aua.coup.perform.BasePerformer;
+import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class Game {
     /**
      * The list of players participating in the game.
      */
-    public ArrayList<Player> players;
+    public ArrayList<BasePerformer> players;
     /**
      * The total number of players in the game.
      */
@@ -43,17 +45,6 @@ public class Game {
         return players.size() != 1;
     }
 
-    public Player choosePlayerFromBots(ArrayList<Player> players) {
-        Random random = new Random();
-        ArrayList<Player> possibleChallengers = new ArrayList<Player>();
-        for (Player player : players) {
-            if (!player.isHuman && player.getTheNumberOfInfluences() == 2) {
-                possibleChallengers.add(player);
-            }
-        }
-        return possibleChallengers.get(random.nextInt(possibleChallengers.size()));
-    }
-
     /**
      * Starts the game.
      *
@@ -66,7 +57,7 @@ public class Game {
 
          Scanner userInput = new Scanner(System.in);
 
-         ArrayList<Player> playerList = new ArrayList<Player>(numberOfPlayers);
+         ArrayList<BasePerformer> playerList = new ArrayList<BasePerformer>(numberOfPlayers);
 
          System.out.println("Enter your name: ");
          String playerName = userInput.nextLine();
@@ -80,8 +71,8 @@ public class Game {
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);
 
-        for (Player player : players) {
-            System.out.println(player.influences);
+        for (BasePerformer player : players) {
+            System.out.println(player.getInfluences());
         }
     }
 

@@ -1,8 +1,6 @@
 package src.am.aua.coup.perform;
 
 import src.am.aua.coup.core.Action;
-import src.am.aua.coup.core.Deck;
-import src.am.aua.coup.core.Game;
 import src.am.aua.coup.influences.Character;
 
 import java.util.*;
@@ -13,28 +11,9 @@ import java.util.*;
 
 // MODIFY
 public class Player extends BasePerformer {
-    ArrayList<Character> influences = new ArrayList<Character>(2);
-    /**
-     * The initial number of coins in the player's wallet.
-     */
-    private int wallet;
-    /**
-     * The number of character influences (cards) the player possesses.
-     */
-    private String playerName;
-    public boolean isHuman;
-    public boolean cheat;
-    public String getName() {
-        return playerName;
-    }
-    public void setName(String update) {
-        playerName = update;
-    }
-
     public Player () {
-        this.playerName = "Catrin";
-        this.wallet = 2;
-        this.isHuman = false;
+        super.setName("Pedro");
+        super.setWallet(2);
     }
     /**
      * Constructor method.
@@ -43,83 +22,14 @@ public class Player extends BasePerformer {
      * @param initialCoins The initial number of coins in the player's wallet.
      */
     // isHuman remove
-    public Player(String playerName, int initialCoins, boolean isHuman) {
-        this.playerName = playerName;
-        this.wallet = initialCoins;
-        this.isHuman = isHuman;
-    }
-
-    /**
-     * Changes the player's wallet balance by the specified amount.
-     *
-     * @param update The amount by which to update the player's wallet balance.
-     */
-    public void changeWallet(int update) {
-        this.wallet += update;
-    }
-
-    public int getWallet () {
-        return wallet;
-    }
-    /**
-     * Retrieves the number of character influences (cards) the player possesses.
-     *
-     * @return The number of character influences (cards) the player possesses.
-     */
-    public int getTheNumberOfInfluences() {
-        return influences.size();
-    }
-
-    // override equals method. checks the equality based on the name of the player.
-    public boolean equals(Player other) {
-        if (other == null || !other.getClass().getSimpleName().equals("src.am.aua.coup.perform.Player")) {
-            return false;
-        }
-        return this.getName().equals(other.getName());
-    }
-
-    /**
-     * Gets the actions available to the player based on their wish to cheat or be honest.
-     *
-     * @return The list of available actions for the player.
-     */
-
-    // assassinate
-    public ArrayList<Action.Types> getAvailableActions() {
-        ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
-                Action.Types.FOREIGNAID,
-                Action.Types.INCOME
-        ));
-        ArrayList<Action.Types> correctActions = new ArrayList<>();
-        for (Character influence : influences) {
-            Action.Types actionType = influence.canAct();
-            if (actionType == Action.Types.ASSASSINATE && wallet >= 3) {
-                correctActions.add(actionType);
-            }
-            correctActions.add(actionType);
-        }
-
-        if (wallet >= 7) {
-            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
-        } else if (!cheat) {
-            availableActions.addAll(correctActions);
-        } else {
-            for (Action.Types element : Action.Types.values()) {
-                if (!(availableActions.contains(element) || correctActions.contains(element) || element == Action.Types.COUP)) {
-                    availableActions.add(element);
-                }
-            }
-            if (!correctActions.contains(Action.Types.ASSASSINATE) && wallet >= 3) {
-                availableActions.add(Action.Types.ASSASSINATE);
-            }
-        }
-        System.out.println(availableActions);
-        return availableActions;
+    public Player(String playerName, int initialCoins) {
+        super.setName(playerName);
+        this.setWallet(initialCoins);
     }
 
     /**
      * A method to return the action user wants to do from the given list of available actions.
-     * @param available arrayList of available actions.
+     * @param available arrayList of available items to choose.
      * @return action the user wants to do.
      */
     public <T> T getUserChoice(ArrayList<T> available) {
@@ -149,52 +59,37 @@ public class Player extends BasePerformer {
         }
     }
 
-    public String toString() {
-        return this.getName();
-    }
-
-
-    public boolean challenge(Player playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
-        if (playerToChallenge.cheat) {
-            playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
-            System.out.println("Congratulations, " + this.playerName + "! You won the challenge!");
-            return false;
-        }
-        else {
-            this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
-            if (isActionChallenge) {
-                this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
-                if (playerToChallenge.influences.getFirst().canAct() == action) {
-                    playerToChallenge.influences.removeFirst();
-                } else {
-                    playerToChallenge.influences.removeLast();
-                }
-                playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
-            }
-            System.out.println("Congratulations, " + playerToChallenge.playerName + "! You won the challenge!");
-            return true;
-        }
-
-    }
-
-    public boolean performBlock (Player blocked, ArrayList<Character> myDeck, Action.Types action, Game myGame, ArrayList<Player> players) {
+    // a method for the user to challenge the bot's block or action. returns true if the challenge is successful, otherwise - false
+    public boolean userChallenges (Bot botToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         Scanner userInput = new Scanner(System.in);
-        System.out.println(blocked.getName() + ", do you want to challenge " + this.getName() + "? Answer yes or no.");
-
-        if (userInput.nextLine().equalsIgnoreCase("yes")) {
-            System.out.println(blocked.getName() + " decided to challenge " + this.getName() + "'s block!");
-            return blocked.challenge(this, myDeck, action, false);
-        }
-        else {
-            Player challenger = myGame.choosePlayerFromBots(players);
-            if (!challenger.equals(this)) {
-                System.out.println(challenger.getName() + " decided to challenge " + this.getName() + "'s block!");
-                return blocked.challenge(challenger, myDeck, action, false);
+        if (isActionChallenge) {
+            System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s action? Answer yes or no!");
+            boolean wantsToChallenge = userInput.next().equalsIgnoreCase("yes");
+            if (wantsToChallenge) {
+                return this.challenge(botToChallenge, myDeck, action, true);
             }
         }
+        else {
+            System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s block? Answer yes or no!");
+            String answer = userInput.next();
+            if (answer.equalsIgnoreCase("yes")) {
+                return this.challenge(botToChallenge, myDeck, action, false);
+            }
+        }
+        return false;
+    }
 
-        System.out.println(this.getName() + " successfully blocked " + blocked.getName() + "'s action!");
-        return true;
+    // block for user
+    public boolean userBlock (BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action,
+                              ArrayList<BasePerformer> players) {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println(this.getName() + ", do you want to block player " + blocked.getName() + "'s action? Answer yes or no!");
+        if (userInput.next().equalsIgnoreCase("yes")) {
+            System.out.println(this.getName() + " decided to block player " + blocked.getName() + "'s action!");
+            Bot target = (Bot) blocked;
+            return !target.botChallenges(this, myDeck, action, false);
+        }
+        return false;
     }
 
 
