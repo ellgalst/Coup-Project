@@ -22,7 +22,7 @@ public class Action {
         FOREIGNAID
     }
 
-    public static void performAction(Player player, Action.Types action, Player target) {
+    public static void performAction(BasePerformer player, Action.Types action, BasePerformer target) {
         switch (action) {
             case STEAL:
                 performSteal(player, target);
@@ -51,7 +51,7 @@ public class Action {
     /**
      * Method that implements taxation action of card src.am.aua.coup.influences.Duke
      */
-    public static void performTax(Player player) {
+    public static void performTax(BasePerformer player) {
         player.setWallet(player.getWallet() + 3);
     }
 
@@ -80,7 +80,7 @@ public class Action {
      * Implements the action of influence src.am.aua.coup.influences.Captain
      * that can steal coins from other players
      */
-    public static void performSteal(Player player1, Player player2){
+    public static void performSteal(BasePerformer player1, BasePerformer player2){
         if(player2.getWallet()<2){
             player1.setWallet(player1.getWallet() + player2.getWallet());
             player2.setWallet(0);
@@ -95,7 +95,7 @@ public class Action {
      * Method of card src.am.aua.coup.influences.Assassin that forcing
      * one player to give up influence
      */
-    public static void performAssassinate(Player player1, Player player2){
+    public static void performAssassinate(BasePerformer player1, BasePerformer player2){
         player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
         player1.setWallet(player1.getWallet() - 3);
     }
@@ -103,24 +103,22 @@ public class Action {
     /**
      * Method Income that collects one coin from the bank
      */
-    public static void performIncome(Player player){
+    public static void performIncome(BasePerformer player){
         player.setWallet(player.getWallet() + 1);
     }
 
     /**
      * Method ForeignAid that collects two coins from the bank
      */
-    public static void performForeignAid(Player player){
+    public static void performForeignAid(BasePerformer player){
         player.setWallet(player.getWallet() + 2);
     }
 
     /**
      * Method that cause a player to give up an influence
      */
-    public static void performCoup(Player player1, Player player2){
+    public static void performCoup(BasePerformer player1, BasePerformer player2){
         player1.setWallet(player1.getWallet() - 7);
         player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
     }
-
 }
-

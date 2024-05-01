@@ -6,7 +6,6 @@ import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -30,9 +29,9 @@ public class Game {
     public Game(int numberOfPlayers) {
         super();
         this.numberOfPlayers = numberOfPlayers;
-        this.players = new ArrayList<Player>(numberOfPlayers);
+        this.players = new ArrayList<BasePerformer>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.players.add(new Player(defaultNamesForPlayers[i],2, false));
+            this.players.add(new Bot(defaultNamesForPlayers[i],2));
         }
     }
 
@@ -61,12 +60,12 @@ public class Game {
 
          System.out.println("Enter your name: ");
          String playerName = userInput.nextLine();
-         Player humanPlayer = new Player(playerName,2, true);
+         Player humanPlayer = new Player(playerName,2);
          humanPlayer.setName(playerName);
          playerList.add(humanPlayer);
 
         for (int i = 0; i < numberOfPlayers - 1; i++) {
-            playerList.add(new Player(defaultNamesForPlayers[i],2, false));
+            playerList.add(new Bot(defaultNamesForPlayers[i],2));
         }
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);

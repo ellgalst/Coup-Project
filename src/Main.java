@@ -2,10 +2,10 @@ package src;
 
 import src.am.aua.coup.core.*;
 import src.am.aua.coup.exceptions.InvalidNumberOfPlayersException;
+import src.am.aua.coup.perform.BasePerformer;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -18,16 +18,14 @@ public class Main {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter a number from 2 to 7, which will be the number of players you want to play today!");
         int numberOfPlayers = userInput.nextByte();
-        final double CHALLENGE_PROBABILITY = 0.5;
-        final double BLOCK_PROBABILITY = 0.5;
-        Random random = new Random();
 
         Game myGame = new Game(numberOfPlayers);
         myGame.start();
 
         while (myGame.isNotOver()) {
-            for (Player player : myGame.players) {
-                for (Player current : myGame.players) {
+            for (BasePerformer player : myGame.players) {
+
+                for (BasePerformer current : myGame.players) {
                     System.out.println("Say Hi to " + current.getName() + ".");
                 }
 
