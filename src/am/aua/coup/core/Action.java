@@ -1,6 +1,7 @@
 package src.am.aua.coup.core;
 
 import src.am.aua.coup.influences.Character;
+import src.am.aua.coup.perform.BasePerformer;
 import src.am.aua.coup.perform.Player;
 
 /**
@@ -58,14 +59,14 @@ public class Action {
      * Method that draws 2 influences and
      * puts 2 back of card src.am.aua.coup.influences.Ambassador
      */
-    public static void performExchange(Player player) {
+    public static void performExchange(BasePerformer player) {
         System.out.println("What 2 Influences would you like to keep from these: ");
         player.getInfluences().addAll(Deck.randomizer(Deck.deck, 2));
-        if(player.isHuman){
-            Character choice = player.getUserChoice(player.getInfluences());
+        if(player instanceof Player current){
+            Character choice = current.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
             Deck.deck.add(choice);
-            choice = player.getUserChoice(player.getInfluences());
+            choice = current.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
             Deck.deck.add(choice);
         }

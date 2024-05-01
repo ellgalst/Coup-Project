@@ -9,7 +9,6 @@ import java.util.*;
  * A separate class to keep track of all players.
  */
 
-// MODIFY
 public class Player extends BasePerformer {
     public Player () {
         super.setName("Pedro");
