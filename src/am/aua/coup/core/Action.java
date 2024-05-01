@@ -1,6 +1,8 @@
 package src.am.aua.coup.core;
 
 import src.am.aua.coup.influences.Character;
+import src.am.aua.coup.perform.BasePerformer;
+import src.am.aua.coup.perform.Player;
 
 /**
  * Represents the various actions that can be taken in the coup game
@@ -46,36 +48,31 @@ public class Action {
         }
     }
 
-    public boolean isBlockable(Types actionType){
-        return actionType == Types.FOREIGNAID || actionType == Types.ASSASSINATE || actionType == Types.STEAL;
-
-    }
-
     /**
      * Method that implements taxation action of card src.am.aua.coup.influences.Duke
      */
     public static void performTax(Player player) {
-        player.changeWallet(3);
+        player.setWallet(player.getWallet() + 3);
     }
 
     /**
      * Method that draws 2 influences and
      * puts 2 back of card src.am.aua.coup.influences.Ambassador
      */
-    public static void performExchange(Player player) {
+    public static void performExchange(BasePerformer player) {
         System.out.println("What 2 Influences would you like to keep from these: ");
-        player.influences.addAll(Deck.randomizer(Deck.deck, 2));
-        if(player.isHuman){
-            Character choice = player.getUserChoice(player.influences);
-            player.influences.remove(choice);
+        player.getInfluences().addAll(Deck.randomizer(Deck.deck, 2));
+        if(player instanceof Player current){
+            Character choice = current.getUserChoice(player.getInfluences());
+            player.getInfluences().remove(choice);
             Deck.deck.add(choice);
-            choice = player.getUserChoice(player.influences);
-            player.influences.remove(choice);
+            choice = current.getUserChoice(player.getInfluences());
+            player.getInfluences().remove(choice);
             Deck.deck.add(choice);
         }
         else {
-            player.influences.remove(Deck.randomizer(player.influences, 1).getFirst());
-            player.influences.remove(Deck.randomizer(player.influences, 1).getFirst());
+            player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
+            player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
         }
     }
 
@@ -85,12 +82,12 @@ public class Action {
      */
     public static void performSteal(Player player1, Player player2){
         if(player2.getWallet()<2){
-            player1.changeWallet(player2.getWallet());
-            player2.changeWallet(-player2.getWallet());
+            player1.setWallet(player1.getWallet() + player2.getWallet());
+            player2.setWallet(0);
         }
         else {
-            player2.changeWallet(-2);
-            player1.changeWallet(2);
+            player2.setWallet(player2.getWallet() - 2);
+            player1.setWallet(player1.getWallet() + 2);
         }
     }
 
@@ -99,30 +96,30 @@ public class Action {
      * one player to give up influence
      */
     public static void performAssassinate(Player player1, Player player2){
-        player2.influences.remove(Deck.randomizer(player2.influences, 1).getFirst());
-        player1.changeWallet(-3);
+        player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
+        player1.setWallet(player1.getWallet() - 3);
     }
 
     /**
      * Method Income that collects one coin from the bank
      */
     public static void performIncome(Player player){
-        player.changeWallet(1);
+        player.setWallet(player.getWallet() + 1);
     }
 
     /**
      * Method ForeignAid that collects two coins from the bank
      */
     public static void performForeignAid(Player player){
-        player.changeWallet(2);
+        player.setWallet(player.getWallet() + 2);
     }
 
     /**
      * Method that cause a player to give up an influence
      */
     public static void performCoup(Player player1, Player player2){
-        player1.changeWallet(-7);
-        player2.influences.remove(Deck.randomizer(player2.influences, 1).getFirst());
+        player1.setWallet(player1.getWallet() - 7);
+        player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
     }
 
 }
