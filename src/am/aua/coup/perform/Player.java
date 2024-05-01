@@ -60,8 +60,8 @@ public class Player extends BasePerformer {
         }
     }
 
-    // a method that that handles the action in the user's turn
-    public void userAct(Game myGame) {
+    // a method that that handles the action in the user's turn, returns whether the user cheated
+    public boolean act(Game myGame) {
         Scanner user = new Scanner(System.in);
 
         boolean validAnswer = false;
@@ -81,28 +81,28 @@ public class Player extends BasePerformer {
         Bot target = null;
         if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
             System.out.println("Please, choose the player you want to perform the action on: ");
-
             ArrayList<BasePerformer> currentBots = new ArrayList<>(myGame.players);
             target = Bot.chooseBot(currentBots);
         }
         Action.performAction(this, chosenAction, target);
+        return this.getCheat();
     }
 
 
     // a method for the user to challenge the bot's block or action. returns true if the challenge is successful, otherwise - false
-    public boolean userChallenges(Bot botToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
+    public boolean challenges(BasePerformer botToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         Scanner userInput = new Scanner(System.in);
         if (isActionChallenge) {
             System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s action? Answer yes or no!");
             boolean wantsToChallenge = userInput.next().equalsIgnoreCase("yes");
             if (wantsToChallenge) {
-                return this.challenge(botToChallenge, myDeck, action, true);
+                return this.challenge((Bot) botToChallenge, myDeck, action, true);
             }
         } else {
             System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s block? Answer yes or no!");
             String answer = userInput.next();
             if (answer.equalsIgnoreCase("yes")) {
-                return this.challenge(botToChallenge, myDeck, action, false);
+                return this.challenge((Bot) botToChallenge, myDeck, action, false);
             }
         }
         return false;
@@ -110,14 +110,13 @@ public class Player extends BasePerformer {
 
 
     // block for user
-    public boolean userBlock(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action,
-                             ArrayList<BasePerformer> players) {
+    public boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action) {
         Scanner userInput = new Scanner(System.in);
         System.out.println(this.getName() + ", do you want to block player " + blocked.getName() + "'s action? Answer yes or no!");
         if (userInput.next().equalsIgnoreCase("yes")) {
             System.out.println(this.getName() + " decided to block player " + blocked.getName() + "'s action!");
             Bot target = (Bot) blocked;
-            return !target.botChallenges(this, myDeck, action, false);
+            return !target.challenges(this, myDeck, action, false);
         }
         return false;
     }

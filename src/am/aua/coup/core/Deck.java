@@ -86,7 +86,7 @@ public class Deck {
      */
      public ArrayList<BasePerformer> distributeCards(ArrayList<BasePerformer> currentPlayers) {
         for (BasePerformer player : currentPlayers){
-            player.setInfluences(randomizer(this.deck, 2));
+            player.setInfluences(randomizer(deck, 2));
         }
         return currentPlayers;
     }

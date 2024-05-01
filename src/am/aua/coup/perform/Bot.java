@@ -1,6 +1,7 @@
 package src.am.aua.coup.perform;
 
 import src.am.aua.coup.core.Action;
+import src.am.aua.coup.core.Game;
 import src.am.aua.coup.influences.Character;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class Bot extends BasePerformer {
     private final static double CHALLENGE_PROBABILITY = 0.5;
     private final static double BLOCK_POSSIBILITY = 0.5;
+    private final static double CHEAT_PROBABILITY = 0.5;
 
     public Bot() {
         super.setName("Miguel");
@@ -45,8 +47,27 @@ public class Bot extends BasePerformer {
         return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
     }
 
+
+    // a method that that handles the action in the bot's turn, returns whether the bot cheated
+    public boolean act(Game myGame) {
+        Random number = new Random();
+        this.setCheat(number.nextDouble() >= CHEAT_PROBABILITY);
+        ArrayList<Action.Types> available = this.getAvailableActions();
+        int randomIndex;
+        randomIndex = (int) (Math.random() * (available.size()));
+        Action.Types chosenAction = available.get(randomIndex);
+        BasePerformer target = null;
+        if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
+            ArrayList<BasePerformer> currentPlayers = new ArrayList<>(myGame.players);
+            randomIndex = (int) (Math.random() * (currentPlayers.size()));
+            target = currentPlayers.get(randomIndex);
+        }
+        Action.performAction(this, chosenAction, target);
+        return this.getCheat();
+    }
+
     // challenge for the bot
-    public boolean botChallenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
+    public boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         Random challenge = new Random();
         if (isActionChallenge) {
             if (challenge.nextDouble() >= CHALLENGE_PROBABILITY) {
@@ -63,7 +84,7 @@ public class Bot extends BasePerformer {
     }
 
     // block for the bot
-    public boolean botBlock(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action) {
+    public boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action) {
         Random number = new Random();
         if (number.nextDouble() >= BLOCK_POSSIBILITY) {
             System.out.println(this.getName() + " player decided to block " + blocked.getName() + "'s action!");

@@ -59,18 +59,20 @@ public class Game {
          ArrayList<BasePerformer> playerList = new ArrayList<BasePerformer>(numberOfPlayers);
 
          System.out.println("Enter your name: ");
-         String playerName = userInput.nextLine();
+         String playerName = userInput.next();
          Player humanPlayer = new Player(playerName,2);
          humanPlayer.setName(playerName);
          playerList.add(humanPlayer);
 
         for (int i = 0; i < numberOfPlayers - 1; i++) {
-            playerList.add(new Bot(defaultNamesForPlayers[i],2));
+            playerList.add(new Bot(defaultNamesForPlayers[i],2));;
         }
+
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);
 
         for (BasePerformer player : players) {
+
             System.out.println(player.getInfluences());
         }
     }

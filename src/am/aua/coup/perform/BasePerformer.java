@@ -13,7 +13,6 @@ public abstract class BasePerformer {
     private String name;
     private boolean cheat;
 
-
     // accessors
     public ArrayList<Character> getInfluences(){
         return influences;
@@ -33,7 +32,7 @@ public abstract class BasePerformer {
 
     // mutators
     public void setInfluences(ArrayList<Character> chars){
-        for(int i=0; i<influences.size(); i++){
+        for(int i=0; i < influences.size(); i++){
             influences.set(i, chars.get(i));
         }
     }
@@ -126,5 +125,8 @@ public abstract class BasePerformer {
         }
     }
 
+    public abstract boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge);
+    public abstract boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action);
+    public abstract boolean act(Game myGame);
 
 }
