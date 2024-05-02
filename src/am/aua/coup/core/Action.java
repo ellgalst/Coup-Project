@@ -19,7 +19,7 @@ public class Action {
         TAX,
         COUP,
         INCOME,
-        FOREIGNAID
+        FOREIGN_AID
     }
 
     public static void performAction(BasePerformer player, Action.Types action, BasePerformer target) {
@@ -42,7 +42,7 @@ public class Action {
             case INCOME:
                 performIncome(player);
                 break;
-            case FOREIGNAID:
+            case FOREIGN_AID:
                 performForeignAid(player);
                 break;
         }
@@ -74,6 +74,7 @@ public class Action {
             player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
             player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
         }
+        System.out.println(player.getName() + "'s influences now are: " + player.getInfluences());
     }
 
     /**

@@ -18,13 +18,12 @@ public class Duke extends Character {
      * The type of action this character can perform.
      */
     public Action.Types canAct () {
-        System.out.println(Action.Types.TAX);
         return Action.Types.TAX;
     }
 
     @Override
     public Action.Types canBlock() {
-        return Action.Types.FOREIGNAID;
+        return Action.Types.FOREIGN_AID;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Player extends BasePerformer {
      * @param available arrayList of available items to choose.
      * @return action the user wants to do.
      */
-    public <T> T getUserChoice(ArrayList<T> available) {
+    public static  <T> T getUserChoice(ArrayList<T> available) {
         Scanner userInput = new Scanner(System.in);
         int index;
 
@@ -60,32 +60,35 @@ public class Player extends BasePerformer {
         }
     }
 
-    // a method that that handles the action in the user's turn, returns whether the user cheated
-    public boolean act(Game myGame) {
-        Scanner user = new Scanner(System.in);
+    public static Bot getTarget(ArrayList<BasePerformer> players) {
+        ArrayList<Bot> available = new ArrayList<Bot>();
+        for (BasePerformer player : players) {
+            if (player instanceof Bot) {
+                available.add((Bot) player);
+            }
+        }
+        return getUserChoice(available);
 
+    }
+
+    // a method that that handles the action in the user's turn, returns whether the user cheated
+    public Action.Types act(Game myGame) {
+        Scanner scanner = new Scanner(System.in);
         boolean validAnswer = false;
         while (!validAnswer) {
             System.out.println(this.getName() + ", do you want to cheat in this turn? Answer yes or no!");
-            if (user.next().equalsIgnoreCase("no")) {
+            String answer = scanner.next();
+            if (answer.equalsIgnoreCase("no")) {
                 this.setCheat(false);
                 validAnswer = true;
-            } else if (user.next().equalsIgnoreCase("yes")) {
+            } else if (answer.equalsIgnoreCase("yes")) {
                 this.setCheat(true);
                 validAnswer = true;
             } else {
                 System.out.println("Not sure what you typed. Try again.");
             }
         }
-        Action.Types chosenAction = this.getUserChoice(this.getAvailableActions());
-        Bot target = null;
-        if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
-            System.out.println("Please, choose the player you want to perform the action on: ");
-            ArrayList<BasePerformer> currentBots = new ArrayList<>(myGame.players);
-            target = Bot.chooseBot(currentBots);
-        }
-        Action.performAction(this, chosenAction, target);
-        return this.getCheat();
+        return this.getUserChoice(this.getAvailableActions());
     }
 
 
@@ -105,7 +108,7 @@ public class Player extends BasePerformer {
                 return this.challenge((Bot) botToChallenge, myDeck, action, false);
             }
         }
-        return false;
+        return true;
     }
 
 
@@ -116,7 +119,7 @@ public class Player extends BasePerformer {
         if (userInput.next().equalsIgnoreCase("yes")) {
             System.out.println(this.getName() + " decided to block player " + blocked.getName() + "'s action!");
             Bot target = (Bot) blocked;
-            return !target.challenges(this, myDeck, action, false);
+            return target.challenges(this, myDeck, action, false);
         }
         return false;
     }

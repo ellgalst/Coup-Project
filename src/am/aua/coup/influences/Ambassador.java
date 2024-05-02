@@ -15,7 +15,6 @@ public class Ambassador extends Character {
 
     // Determines the action type this character can perform
     public Action.Types canAct () {
-        System.out.println(Action.Types.EXCHANGE);
         return Action.Types.EXCHANGE;
     }
 

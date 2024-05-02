@@ -1,10 +1,10 @@
 package src.am.aua.coup.core; /**
  * A separate class to keep track of the deck cards with the use of randomizer.
  */
+
 import src.am.aua.coup.influences.*;
 import src.am.aua.coup.influences.Character;
 import src.am.aua.coup.perform.BasePerformer;
-import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,7 +18,7 @@ public class Deck {
      * Arraylist to store the current cards in the deck.
      */
     public static ArrayList<Character> deck = new ArrayList<Character>(cardCount);
-    
+
 
     /**
      * No-arg constructor
@@ -47,7 +47,7 @@ public class Deck {
     /**
      * Accessor method
      */
-    public ArrayList<Character> getDeck(){
+    public ArrayList<Character> getDeck() {
         return new ArrayList<>(deck);
     }
 
@@ -73,7 +73,6 @@ public class Deck {
             int randomIndex = rn.nextInt(deck.size());
             randomCharacters.add(deck.get(randomIndex));
         }
-
         return randomCharacters;
     }
 
@@ -84,8 +83,8 @@ public class Deck {
      * @param currentPlayers The arraylist of players to whom cards will be distributed.
      * @return The arraylist of players with their respective cards.
      */
-     public ArrayList<BasePerformer> distributeCards(ArrayList<BasePerformer> currentPlayers) {
-        for (BasePerformer player : currentPlayers){
+    public ArrayList<BasePerformer> distributeCards(ArrayList<BasePerformer> currentPlayers) {
+        for (BasePerformer player : currentPlayers) {
             player.setInfluences(randomizer(deck, 2));
         }
         return currentPlayers;

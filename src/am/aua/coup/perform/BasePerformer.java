@@ -8,34 +8,37 @@ import src.am.aua.coup.influences.Character;
 import java.util.*;
 
 public abstract class BasePerformer {
-    ArrayList<Character> influences = new ArrayList<Character>(2);
+    private ArrayList<Character> influences = new ArrayList<Character>(2);
     private int wallet;
     private String name;
     private boolean cheat;
 
     // accessors
-    public ArrayList<Character> getInfluences(){
+    public ArrayList<Character> getInfluences() {
         return influences;
     }
-    public int getNumberOfInfluences(){
+
+    public int getNumberOfInfluences() {
         return influences.size();
     }
-    public int getWallet () {
+
+    public int getWallet() {
         return wallet;
     }
+
     public String getName() {
         return name;
     }
+
     public boolean getCheat() {
         return cheat;
     }
 
     // mutators
-    public void setInfluences(ArrayList<Character> chars){
-        for(int i=0; i < influences.size(); i++){
-            influences.set(i, chars.get(i));
-        }
+    public void setInfluences(ArrayList<Character> chars) {
+        influences = new ArrayList<>(chars);
     }
+
     public void setWallet(int coins) {
         this.wallet = coins;
     }
@@ -43,6 +46,7 @@ public abstract class BasePerformer {
     public void setName(String update) {
         name = update;
     }
+
     public void setCheat(boolean value) {
         this.cheat = value;
     }
@@ -66,40 +70,42 @@ public abstract class BasePerformer {
      * @return The list of available actions for the player.
      */
     public ArrayList<Action.Types> getAvailableActions() {
-        ArrayList<Action.Types> availableActions = new ArrayList<>(Arrays.asList(
-                Action.Types.FOREIGNAID,
+        if (wallet >= 7) {
+            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
+        }
+        ArrayList<Action.Types> availableActions = new ArrayList<Action.Types>();
+
+        ArrayList<Action.Types> correctActions = new ArrayList<Action.Types>(Arrays.asList(
+                Action.Types.FOREIGN_AID,
                 Action.Types.INCOME
         ));
-
-        ArrayList<Action.Types> correctActions = new ArrayList<>();
         for (Character influence : influences) {
             Action.Types actionType = influence.canAct();
             if (actionType == Action.Types.ASSASSINATE) {
                 if (wallet >= 3) {
                     correctActions.add(actionType);
                 }
+            } else if (actionType != Action.Types.COUP) {
+                correctActions.add(actionType);
             }
-            correctActions.add(actionType);
         }
-
-        if (wallet >= 7) {
-            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
-        } else if (!cheat) {
+        if (!cheat) {
             availableActions.addAll(correctActions);
-        } else {
-            for (Action.Types element : Action.Types.values()) {
-                if (!(availableActions.contains(element) || correctActions.contains(element) || element == Action.Types.COUP)) {
-                    availableActions.add(element);
+        }
+        else {
+            for (Action.Types action : Action.Types.values()) {
+                if (action == Action.Types.ASSASSINATE) {
+                    if (wallet >= 3 && !correctActions.contains(Action.Types.ASSASSINATE)) {
+                        availableActions.add(Action.Types.ASSASSINATE);
+                    }
+                }
+                else if (!correctActions.contains(action) && action != Action.Types.COUP) {
+                    availableActions.add(action);
                 }
             }
-            if (!correctActions.contains(Action.Types.ASSASSINATE) && wallet >= 3) {
-                availableActions.add(Action.Types.ASSASSINATE);
-            }
         }
-        System.out.println(availableActions);
         return availableActions;
     }
-
 
 
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
@@ -107,9 +113,8 @@ public abstract class BasePerformer {
         if (playerToChallenge.cheat) {
             playerToChallenge.influences.remove(Deck.randomizer(playerToChallenge.influences, 1).getFirst());
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
-            return false;
-        }
-        else {
+            return true;
+        } else {
             this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
             if (isActionChallenge) {
                 this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
@@ -121,12 +126,14 @@ public abstract class BasePerformer {
                 playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
             }
             System.out.println("Congratulations, " + playerToChallenge.getName() + "! You won the challenge!");
-            return true;
+            return false;
         }
     }
 
     public abstract boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge);
+
     public abstract boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action);
-    public abstract boolean act(Game myGame);
+
+    public abstract Action.Types act(Game myGame);
 
 }

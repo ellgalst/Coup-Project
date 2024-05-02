@@ -18,10 +18,6 @@ public abstract class Character{
      * The description of the character.
      */
     protected String description;
-    /**
-     * The type of action this character can perform.
-     */
-    public Action.Types canAct;
 
     /**
      * Initializes a src.am.aua.coup.influences.Character with its name and description.

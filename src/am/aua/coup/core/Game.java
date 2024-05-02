@@ -44,6 +44,32 @@ public class Game {
         return players.size() != 1;
     }
 
+    public BasePerformer chooseChallenger(BasePerformer currentPlayer) {
+        BasePerformer challenger;
+        if (currentPlayer instanceof Player) {
+            challenger = Bot.chooseBot(players);
+        } else {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println(players.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+            String answer = scanner.next();
+            if (answer.equalsIgnoreCase("yes")) {
+                challenger = players.getFirst(); // the first player in the players arraylist is always the user in the
+            } else {
+                challenger = Bot.chooseBot(players, (Bot) currentPlayer);
+            }
+        }
+        return challenger;
+    }
+
+    public void printData() {
+        System.out.println(players);
+        for (BasePerformer current : players) {
+            System.out.println(current.getName() + "'s influences: " + current.getInfluences());
+            System.out.println("Wallet: " + current.getWallet());
+            System.out.println();
+        }
+    }
+
     /**
      * Starts the game.
      *
@@ -70,12 +96,10 @@ public class Game {
 
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);
+        System.out.println(players);
 
         for (BasePerformer player : players) {
-
             System.out.println(player.getInfluences());
         }
     }
-
-
 }

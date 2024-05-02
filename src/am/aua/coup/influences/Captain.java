@@ -17,7 +17,6 @@ public class Captain extends Character {
 
     // Determines the action type this character can perform
     public Action.Types canAct () {
-        System.out.println(Action.Types.STEAL);
         return Action.Types.STEAL;
     }
 

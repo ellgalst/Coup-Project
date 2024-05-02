@@ -18,7 +18,6 @@ public class Assassin extends Character {
 
     // Determines the action type this character can perform
     public Action.Types canAct () {
-        System.out.println(Action.Types.ASSASSINATE);
         return Action.Types.ASSASSINATE;
     }
 

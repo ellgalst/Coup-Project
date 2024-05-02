@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Bot extends BasePerformer {
+    // possibilities
     private final static double CHALLENGE_PROBABILITY = 0.5;
     private final static double BLOCK_POSSIBILITY = 0.5;
     private final static double CHEAT_PROBABILITY = 0.5;
@@ -49,21 +50,13 @@ public class Bot extends BasePerformer {
 
 
     // a method that that handles the action in the bot's turn, returns whether the bot cheated
-    public boolean act(Game myGame) {
+    public Action.Types act(Game myGame) {
         Random number = new Random();
         this.setCheat(number.nextDouble() >= CHEAT_PROBABILITY);
         ArrayList<Action.Types> available = this.getAvailableActions();
         int randomIndex;
         randomIndex = (int) (Math.random() * (available.size()));
-        Action.Types chosenAction = available.get(randomIndex);
-        BasePerformer target = null;
-        if (chosenAction == Action.Types.STEAL || chosenAction == Action.Types.ASSASSINATE || chosenAction == Action.Types.COUP) {
-            ArrayList<BasePerformer> currentPlayers = new ArrayList<>(myGame.players);
-            randomIndex = (int) (Math.random() * (currentPlayers.size()));
-            target = currentPlayers.get(randomIndex);
-        }
-        Action.performAction(this, chosenAction, target);
-        return this.getCheat();
+        return available.get(randomIndex);
     }
 
     // challenge for the bot
@@ -80,7 +73,7 @@ public class Bot extends BasePerformer {
                 return this.challenge(playerToChallenge, myDeck, action, false);
             }
         }
-        return false;
+        return true;
     }
 
     // block for the bot
@@ -99,7 +92,7 @@ public class Bot extends BasePerformer {
             }
             if (answer) {
                 System.out.println(blocked.getName() + " decided to challenge player " + this.getName() + "'s block!");
-                return !blocked.challenge(this, myDeck, action, false);
+                return blocked.challenge(this, myDeck, action, false);
             } else {
                 return true;
             }
