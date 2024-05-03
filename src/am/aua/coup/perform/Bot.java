@@ -45,7 +45,9 @@ public class Bot extends BasePerformer {
                 possibleChallengers.add(player);
             }
         }
-        return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
+        if(random.nextInt(possibleChallengers.size())>0)
+            return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
+        return null;   //*************
     }
 
 

@@ -20,7 +20,7 @@ public class Game {
      * The total number of players in the game.
      */
     public int numberOfPlayers;
-    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Tom", "Maddy", "Dima", "Larisa"};
+    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Pedro", "Maddy", "Dima", "Larisa"};
     /**
      * Initializes a new game with the specified number of players.
      *
@@ -45,10 +45,10 @@ public class Game {
     }
 
     public BasePerformer chooseChallenger(BasePerformer currentPlayer) {
-        BasePerformer challenger;
+        BasePerformer challenger = null;
         if (currentPlayer instanceof Player) {
             challenger = Bot.chooseBot(players);
-        } else {
+        } else{
             Scanner scanner = new Scanner(System.in);
             System.out.println(players.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
             String answer = scanner.next();
@@ -101,5 +101,7 @@ public class Game {
         for (BasePerformer player : players) {
             System.out.println(player.getInfluences());
         }
+
+        //System.out.println(humanPlayer.getInfluences());      The above logic is for testing, this is teh actual one
     }
 }

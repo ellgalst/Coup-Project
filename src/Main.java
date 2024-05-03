@@ -46,7 +46,8 @@ public class Main {
                 System.out.println(challenger);
 
                 // challenger tries to challenge the player
-                if (!challenger.challenges(player, deck, playersChoice, true)) {
+
+                if (challenger!=null&&(!challenger.challenges(player, deck, playersChoice, true))) {
                     if (target != null) {
                         // if the challenger doesn't succeed and there was a target for the action, target may try to block
                         if (!target.block(player, deck, playersChoice)) {

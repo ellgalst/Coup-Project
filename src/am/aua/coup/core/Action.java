@@ -7,7 +7,7 @@ import src.am.aua.coup.perform.Player;
 /**
  * Represents the various actions that can be taken in the coup game
  */
-public class Action {
+public class Action{
 
     /**
      * Enums for actions
