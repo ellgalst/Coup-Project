@@ -20,7 +20,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a number from 2 to 7, which will be the number of players you want to play today!");
         int numberOfPlayers = scanner.nextByte();
-
+        if (numberOfPlayers > 7)
+            throw new InvalidNumberOfPlayersException();
         Game myGame = new Game(numberOfPlayers);
         myGame.start();
 
