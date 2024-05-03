@@ -56,7 +56,9 @@ public class Bot extends BasePerformer {
         ArrayList<Action.Types> available = this.getAvailableActions();
         int randomIndex;
         randomIndex = (int) (Math.random() * (available.size()));
-        return available.get(randomIndex);
+        Action.Types chosenAction = available.get(randomIndex);
+        System.out.println(this.getName() + " decided to perform " + chosenAction + "!");
+        return chosenAction;
     }
 
     // challenge for the bot
@@ -64,12 +66,12 @@ public class Bot extends BasePerformer {
         Random challenge = new Random();
         if (isActionChallenge) {
             if (challenge.nextDouble() >= CHALLENGE_PROBABILITY) {
-                System.out.println(this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s action!");
+                System.out.println("Player " + this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s action!");
                 return this.challenge(playerToChallenge, myDeck, action, true);
             }
         } else {
             if (challenge.nextDouble() >= CHALLENGE_PROBABILITY) {
-                System.out.println(this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s block!");
+                System.out.println("Player " + this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s block!");
                 return this.challenge(playerToChallenge, myDeck, action, false);
             }
         }
@@ -80,7 +82,7 @@ public class Bot extends BasePerformer {
     public boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action) {
         Random number = new Random();
         if (number.nextDouble() >= BLOCK_POSSIBILITY) {
-            System.out.println(this.getName() + " player decided to block " + blocked.getName() + "'s action!");
+            System.out.println("Player " + this.getName() + " decided to block " + blocked.getName() + "'s action!");
 
             boolean answer;
             if (blocked instanceof Player) {

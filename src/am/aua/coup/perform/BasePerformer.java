@@ -117,15 +117,15 @@ public abstract class BasePerformer {
         } else {
             this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
             if (isActionChallenge) {
-                this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
-                if (playerToChallenge.influences.getFirst().canAct() == action) {
-                    playerToChallenge.influences.removeFirst();
-                } else {
-                    playerToChallenge.influences.removeLast();
+                for (Character influence : playerToChallenge.influences) {
+                    if (influence.canAct() == action) {
+                        playerToChallenge.influences.remove(influence);
+                        break;
+                    }
                 }
                 playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
             }
-            System.out.println("Congratulations, " + playerToChallenge.getName() + "! You won the challenge!");
+            System.out.println("Congratulations, " + playerToChallenge + "! You won the challenge!");
             return false;
         }
     }

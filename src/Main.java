@@ -27,6 +27,7 @@ public class Main {
 
         while (myGame.isNotOver()) {
             for (BasePerformer player : myGame.players) {
+                System.out.println("Player " + player + "'s turn!");
                 Action.Types playersChoice = player.act(myGame);
                 BasePerformer target = null;
                 if (playersChoice == Action.Types.STEAL || playersChoice == Action.Types.ASSASSINATE || playersChoice == Action.Types.COUP) {
