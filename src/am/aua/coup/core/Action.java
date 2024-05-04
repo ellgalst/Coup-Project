@@ -2,6 +2,7 @@ package src.am.aua.coup.core;
 
 import src.am.aua.coup.influences.Character;
 import src.am.aua.coup.perform.BasePerformer;
+import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 /**
@@ -60,19 +61,32 @@ public class Action{
      * puts 2 back of card src.am.aua.coup.influences.Ambassador
      */
     public static void performExchange(BasePerformer player) {
-        System.out.println("What 2 Influences would you like to keep from these: ");
+
         player.getInfluences().addAll(Deck.randomizer(Deck.deck, 2));
         if(player instanceof Player current){
-            Character choice = current.getUserChoice(player.getInfluences());
+            System.out.println("What 2 Influences would you like to keep from these: ");
+            Character choice = Player.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
+
             Deck.deck.add(choice);
-            choice = current.getUserChoice(player.getInfluences());
+            choice = Player.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
             Deck.deck.add(choice);
         }
         else {
-            player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
-            player.getInfluences().remove(Deck.randomizer(player.getInfluences(), 1).getFirst());
+            if(player.getInfluences().size()==2) {
+                Character characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
+                player.getInfluences().remove(characterToRemove);
+                Deck.addToDeck(characterToRemove);
+                characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
+                player.getInfluences().remove(characterToRemove);
+                Deck.addToDeck(characterToRemove);
+            }
+            else {
+                Character characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
+                player.getInfluences().remove(characterToRemove);
+                Deck.addToDeck(characterToRemove);
+            }
         }
         System.out.println(player.getName() + "'s influences now are: " + player.getInfluences());
     }
@@ -97,7 +111,9 @@ public class Action{
      * one player to give up influence
      */
     public static void performAssassinate(BasePerformer player1, BasePerformer player2){
-        player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
+        Character characterToRemove = Deck.randomizer(player2.getInfluences(), 1).getFirst();
+        player2.getInfluences().remove(characterToRemove);
+        Deck.addToDeck(characterToRemove);
         player1.setWallet(player1.getWallet() - 3);
     }
 
@@ -120,6 +136,8 @@ public class Action{
      */
     public static void performCoup(BasePerformer player1, BasePerformer player2){
         player1.setWallet(player1.getWallet() - 7);
-        player2.getInfluences().remove(Deck.randomizer(player2.getInfluences(), 1).getFirst());
+        Character characterToRemove = Deck.randomizer(player2.getInfluences(), 1).getFirst();
+        player2.getInfluences().remove(characterToRemove);
+        Deck.addToDeck(characterToRemove);
     }
 }

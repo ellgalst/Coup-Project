@@ -51,6 +51,10 @@ public class Deck {
         return new ArrayList<>(deck);
     }
 
+    public static void addToDeck(Character influence){
+        deck.add(influence);
+    }
+
 
     /**
      * Randomly selects a specified number of cards from the given deck.
