@@ -50,12 +50,20 @@ public class Game {
             challenger = Bot.chooseBot(players);
         } else{
             Scanner scanner = new Scanner(System.in);
-            System.out.println(players.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
-            String answer = scanner.next();
-            if (answer.equalsIgnoreCase("yes")) {
-                challenger = players.getFirst(); // the first player in the players arraylist is always the user in the
-            } else {
-                challenger = Bot.chooseBot(players, (Bot) currentPlayer);
+            boolean correct = false;
+            while (!correct) {
+                System.out.println(players.get(0).getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+                String answer = scanner.next();
+                if (answer.equalsIgnoreCase("yes")) {
+                    challenger = players.getFirst(); // the first player in the players arraylist is always the user in the
+                    correct = true;
+                } else if (answer.equalsIgnoreCase("no")) {
+                    challenger = Bot.chooseBot(players, (Bot) currentPlayer);
+                    correct = true;
+                }
+                else {
+                    System.out.println("Choose yes or no, try again!");
+                }
             }
         }
         return challenger;
