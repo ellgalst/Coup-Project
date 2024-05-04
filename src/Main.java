@@ -18,9 +18,9 @@ public class Main {
     public static void main(final String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter a number from 2 to 7, which will be the number of players you want to play today!");
+            System.out.println("Enter a number from 2 to 6, which will be the number of players you want to play today!");
             int numberOfPlayers = scanner.nextInt();
-            if (numberOfPlayers > 7)
+            if (numberOfPlayers >= 7)
                 throw new InvalidNumberOfPlayersException("invalid Number of players, try again");
 
             Game myGame = new Game(numberOfPlayers);
