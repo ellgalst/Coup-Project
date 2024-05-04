@@ -48,7 +48,10 @@ public class Player extends BasePerformer {
             System.out.print("Enter an index for the preferred item: ");
             if (userInput.hasNextInt()) {
                 index = userInput.nextInt();
-                if (index >= 0 && index < available.size()) {
+                if (available.get(index) == null) {
+                    System.out.println("Now you can't perform this action, please try again later");
+                }
+                else if (index >= 0 && index < available.size()) {
                     return available.get(index);
                 } else {
                     System.out.println("Please, enter a number within the range of the provided items.");
