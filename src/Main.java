@@ -13,7 +13,6 @@ import static src.am.aua.coup.core.Deck.deck;
 public class Main {
     /**
      * The entry point of the Coup game.
-     *
      */
     public static void main(final String[] args) {
         try {
@@ -66,8 +65,7 @@ public class Main {
                     // the turn goes to the next player
                 }
             }
-        }
-        catch(InvalidNumberOfPlayersException e){
+        } catch (InvalidNumberOfPlayersException e) {
             System.out.println("The number of players is invalid, try again");
         }
     }

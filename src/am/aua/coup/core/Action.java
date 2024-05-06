@@ -2,7 +2,6 @@ package src.am.aua.coup.core;
 
 import src.am.aua.coup.influences.Character;
 import src.am.aua.coup.perform.BasePerformer;
-import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 /**
@@ -63,7 +62,7 @@ public class Action{
     public static void performExchange(BasePerformer player) {
 
         player.getInfluences().addAll(Deck.randomizer(Deck.deck, 2));
-        if(player instanceof Player current){
+        if(player instanceof Player){
             System.out.println("What 2 Influences would you like to keep from these: ");
             Character choice = Player.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);

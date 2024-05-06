@@ -82,10 +82,10 @@ public abstract class BasePerformer {
         for (Character influence : influences) {
             Action.Types actionType = influence.canAct();
             if (actionType == Action.Types.ASSASSINATE) {
-                if (wallet >= 3) {
+                if (wallet >= 3 && !correctActions.contains(actionType)) {
                     correctActions.add(actionType);
                 }
-            } else if (actionType != Action.Types.COUP) {
+            } else if (actionType != Action.Types.COUP && !correctActions.contains(actionType)) {
                 correctActions.add(actionType);
             }
         }
@@ -95,15 +95,17 @@ public abstract class BasePerformer {
         else {
             for (Action.Types action : Action.Types.values()) {
                 if (action == Action.Types.ASSASSINATE) {
-                    if (wallet >= 3 && !correctActions.contains(Action.Types.ASSASSINATE)) {
+                    if (wallet >= 3 && !correctActions.contains(Action.Types.ASSASSINATE) && !availableActions.contains(action)) {
                         availableActions.add(Action.Types.ASSASSINATE);
                     }
                 }
-                else if (!correctActions.contains(action) && action != Action.Types.COUP) {
+                else if (!correctActions.contains(action) && action != Action.Types.COUP && !availableActions.contains(action)) {
                     availableActions.add(action);
                 }
             }
         }
+
+
         return availableActions;
     }
 
@@ -117,16 +119,21 @@ public abstract class BasePerformer {
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
             return true;
         } else {
-            this.influences.remove(Objects.requireNonNull(Deck.randomizer(this.influences, 1)).getFirst());
+            this.influences.remove(Deck.randomizer(this.influences, 1).getFirst());
             if (isActionChallenge) {
+                boolean enteredIf = false;
                 for (Character influence : playerToChallenge.influences) {
                     if (influence.canAct() == action) {
                         playerToChallenge.influences.remove(influence);
                         Deck.addToDeck(influence);
+                        enteredIf = true;
                         break;
                     }
                 }
-                //playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
+                if (enteredIf) {
+                    playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
+
+                }
             }
             System.out.println("Congratulations, " + playerToChallenge + "! You won the challenge!");
             return false;
