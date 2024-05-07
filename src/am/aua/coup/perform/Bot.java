@@ -1,6 +1,7 @@
 package src.am.aua.coup.perform;
 
 import src.am.aua.coup.core.Action;
+import src.am.aua.coup.core.Deck;
 import src.am.aua.coup.core.Game;
 import src.am.aua.coup.influences.Character;
 
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class Bot extends BasePerformer {
     // possibilities
-    private final static double CHALLENGE_PROBABILITY = 0.5;
+    private final static double CHALLENGE_PROBABILITY = -1;
     private final static double BLOCK_POSSIBILITY = 0.5;
     private final static double CHEAT_PROBABILITY = 0.5;
 
@@ -33,10 +34,11 @@ public class Bot extends BasePerformer {
                 possibleChallengers.add(player);
             }
         }
-        return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
+        return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size() - 1));
     }
 
     // a method to get choose one Bot, except the current one, from the list of bots
+    // review
     public static Bot chooseBot(ArrayList<BasePerformer> players, Bot currentBot) {
         Random random = new Random();
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
@@ -45,9 +47,8 @@ public class Bot extends BasePerformer {
                 possibleChallengers.add(player);
             }
         }
-        if(random.nextInt(possibleChallengers.size())>0)
-            return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
-        return null;   //*************
+        System.out.println(possibleChallengers);
+        return (Bot) Deck.randomizer(possibleChallengers, 1).getFirst();
     }
 
 

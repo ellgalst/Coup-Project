@@ -63,15 +63,17 @@ public class Deck {
      * @param count The number of cards to select.
      * @return The arraylist of randomly selected cards.
      */
-    public static ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
+
+    // review
+    public static <T> ArrayList<T> randomizer(ArrayList<T> deck, int count) {
         Random random = new Random();
 
         if (count > deck.size()) {
-            System.out.println("Count cannot be greater than or equal to the size of the deck.");
+            System.out.println("Count cannot be greater than or equal to the size of the array.");
             return new ArrayList<>();
         }
 
-        ArrayList<Character> randomCharacters = new ArrayList<Character>(count);
+        ArrayList<T> randomCharacters = (ArrayList<T>) new ArrayList<Character>(count);
 
         for (int i = 0; i < count; i++) {
             int randomIndex = random.nextInt(deck.size());
