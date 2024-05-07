@@ -42,7 +42,7 @@ public class Main {
                     }
 
                     BasePerformer challenger = myGame.chooseChallenger(player);
-                    System.out.println(challenger);
+                    //System.out.println(challenger);
 
                     // challenger tries to challenge the player
 
