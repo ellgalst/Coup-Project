@@ -64,7 +64,7 @@ public class Deck {
      */
 
     // review
-    public static <T> ArrayList<T> randomizer(ArrayList<T> deck, int count) {
+    public static ArrayList<Character> randomizer(ArrayList<Character> deck, int count) {
         Random random = new Random();
 
         if (count > deck.size()) {
@@ -72,7 +72,7 @@ public class Deck {
             return new ArrayList<>();
         }
 
-        ArrayList<T> randomCharacters = (ArrayList<T>) new ArrayList<Character>(count);
+        ArrayList<Character> randomCharacters = new ArrayList<Character>();
 
         for (int i = 0; i < count; i++) {
             int randomIndex = random.nextInt(deck.size());

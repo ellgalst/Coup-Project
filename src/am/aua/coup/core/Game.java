@@ -6,7 +6,6 @@ import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -58,6 +57,7 @@ public class Game {
     }
 
 
+
     /**
      * Checks if the game is still ongoing.
      *
@@ -67,21 +67,29 @@ public class Game {
         return players.size() != 1;
     }
 
-    public BasePerformer chooseChallenger(BasePerformer currentPlayer) {
+    public static BasePerformer chooseChallenger(ArrayList<BasePerformer> players, BasePerformer currentPlayer) {
         BasePerformer challenger = null;
+        Scanner scanner = new Scanner(System.in);
+        boolean correct = false;
+
         if (currentPlayer instanceof Player) {
             challenger = Bot.chooseBot(players);
         } else {
-            Scanner scanner = new Scanner(System.in);
-            boolean correct = false;
+            ArrayList<Player> humanPlayers = new ArrayList<>();
+
+            for (BasePerformer player : players) {
+                if (player instanceof Player) {
+                    humanPlayers.add((Player) player);
+                }
+            }
+
             while (!correct) {
-                System.out.println(players.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+                System.out.println(humanPlayers.get(0).getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
                 String answer = scanner.next();
                 if (answer.equalsIgnoreCase("yes")) {
-                    challenger = players.getFirst(); // the first player in the players arraylist is always the user
+                    challenger = humanPlayers.get(0); // The first player in the humanPlayers list is always the user
                     correct = true;
                 } else if (answer.equalsIgnoreCase("no") && players.size() > 2) {
-
                     challenger = Bot.chooseBot(players, (Bot) currentPlayer);
                     correct = true;
                 } else {
@@ -133,7 +141,5 @@ public class Game {
         for (BasePerformer player : players) {
             System.out.println(player.getInfluences());
         }
-
-        //System.out.println(humanPlayer.getInfluences());      The above logic is for testing, this is teh actual one
     }
 }

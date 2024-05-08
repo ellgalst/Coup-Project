@@ -26,10 +26,7 @@ public class Main {
             myGame.start();
 
             while (myGame.isNotOver()) {
-                System.out.println("AFTER WHILE");
-                System.out.println("BEFORE FORRRRR");
                 for (BasePerformer player : myGame.players) {
-                    System.out.println("AFTER FORRRR");
                     myGame.players = new ArrayList<>(myGame.updatePlayers(player));
                     System.out.println(myGame.players);
                     if (myGame.players.size() == 1) {
@@ -49,7 +46,7 @@ public class Main {
                         }
                     }
 
-                    BasePerformer challenger = myGame.chooseChallenger(player);
+                    BasePerformer challenger = Game.chooseChallenger(myGame.players, player);
 
                     // challenger tries to challenge the player
 
@@ -63,7 +60,10 @@ public class Main {
                             // if the challenger doesn't succeed and there was a target for the action, target may try to block
                             if (!target.block(player, deck, playersChoice)) {
                                 // if the target fails the block, action IS performed
-                                Action.performAction(player, playersChoice, target);
+                                boolean works = Action.performAction(player, playersChoice, target);
+                                if (works) {
+                                    System.out.println(player.getName() + "'s action is performed " + playersChoice);
+                                }
                                 myGame.players = new ArrayList<>(myGame.updatePlayers(player));
                                 System.out.println(myGame.players);
                                 if (myGame.players.size() == 1) {
@@ -72,11 +72,19 @@ public class Main {
                             }
                         }
                         // if there is no target and the challenger fails, the action IS performed
-                        Action.performAction(player, playersChoice, target);
+                        boolean works = Action.performAction(player, playersChoice, target);
+                        if (works) {
+                            System.out.println(player.getName() + "'s action is performed " + playersChoice);
+                        }
                         myGame.players = new ArrayList<>(myGame.updatePlayers(player));
                         System.out.println(myGame.players);
                         if (myGame.players.size() == 1) {
                             break;
+                        }
+                    } else {
+                        boolean works = Action.performAction(player, playersChoice, target);
+                        if (works) {
+                            System.out.println(player.getName() + "'s action is performed " + playersChoice);
                         }
                     }
 

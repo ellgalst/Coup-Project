@@ -65,22 +65,31 @@ public abstract class BasePerformer {
     }
 
 
+    // some issue with challenge
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {
+        // if opponent cheats
         if (playerToChallenge.cheat) {
             Character characterToRemove;
+            // if opponent's influences are 1, we choose it
             if (playerToChallenge.influences.size() == 1) {
                 characterToRemove = playerToChallenge.influences.getFirst();
             } else {
+                // if not, we randomly choose one
                 characterToRemove = Deck.randomizer(playerToChallenge.influences, 1).getFirst();
             }
+            // eventually we remove the chosen influence
             playerToChallenge.influences.remove(characterToRemove);
+            // then, we add that card back to the deck
             Deck.addToDeck(characterToRemove);
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
             return true;
         } else {
+            // if the opponent is honest, we remove a random influence from the challenger's influences
             this.influences.remove(Deck.randomizer(this.influences, 1).getFirst());
+            // if the challenged thing was an action
             if (isActionChallenge) {
+                // we find it in the influences and remove it, returning the card to the deck
                 boolean enteredIf = false;
                 for (Character influence : playerToChallenge.influences) {
                     if (influence.canAct() == action) {
@@ -90,6 +99,7 @@ public abstract class BasePerformer {
                         break;
                     }
                 }
+                // if the card is removed, the opponent gets another card
                 if (enteredIf) {
                     playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
                 }

@@ -26,30 +26,39 @@ public class Action{
         FOREIGN_AID
     }
 
-    public static void performAction(BasePerformer player, Action.Types action, BasePerformer target) {
+    public static boolean performAction(BasePerformer player, Action.Types action, BasePerformer target) {
+        boolean works = false;
         switch (action) {
             case STEAL:
                 performSteal(player, target);
+                works = true;
                 break;
             case EXCHANGE:
                 performExchange(player);
+                works = true;
                 break;
             case ASSASSINATE:
                 performAssassinate(player, target);
+                works = true;
                 break;
             case TAX:
                 performTax(player);
+                works = true;
                 break;
             case COUP:
                 performCoup(player, target);
+                works = true;
                 break;
             case INCOME:
                 performIncome(player);
+                works = true;
                 break;
             case FOREIGN_AID:
                 performForeignAid(player);
+                works = true;
                 break;
         }
+        return works;
     }
 
     /**
@@ -142,6 +151,7 @@ public class Action{
      */
     public static ArrayList<Types> getAvailableActions(BasePerformer player) {
         if (player.getWallet() >= 7) {
+            player.setCheat(false);
             return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
         }
         ArrayList<Action.Types> availableActions = new ArrayList<Action.Types>();

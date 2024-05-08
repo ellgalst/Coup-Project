@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Bot extends BasePerformer {
     // possibilities
-    private final static double CHALLENGE_PROBABILITY = -1;
+    private final static double CHALLENGE_PROBABILITY = 0.5;
     private final static double BLOCK_POSSIBILITY = 0.5;
     private final static double CHEAT_PROBABILITY = 0.5;
 
