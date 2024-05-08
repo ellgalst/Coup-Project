@@ -47,17 +47,22 @@ public class Main {
                     // challenger tries to challenge the player
 
                     if (challenger != null && (!challenger.challenges(player, deck, playersChoice, true))) {
+                        myGame.updatePlayers();
                         if (target != null) {
                             // if the challenger doesn't succeed and there was a target for the action, target may try to block
                             if (!target.block(player, deck, playersChoice)) {
                                 // if the target fails the block, action IS performed
                                 Action.performAction(player, playersChoice, target);
+                                myGame.updatePlayers();
                             }
                         }
                         // if there is no target and the challenger fails, the action IS performed
                         Action.performAction(player, playersChoice, target);
+                        myGame.updatePlayers();
                     }
                     // if the challenger succeeds, the action is NOT performed
+
+                    myGame.updatePlayers();
 
                     // the state of the players after one turn
                     myGame.printData();

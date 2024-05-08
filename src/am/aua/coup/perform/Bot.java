@@ -29,7 +29,7 @@ public class Bot extends BasePerformer {
         Random random = new Random();
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
         for (BasePerformer player : players) {
-            if (player.getNumberOfInfluences() == 2 && !(player instanceof Player)) {
+            if (player instanceof Bot) {
                 possibleChallengers.add(player);
             }
         }
@@ -38,16 +38,17 @@ public class Bot extends BasePerformer {
 
     // a method to get choose one Bot, except the current one, from the list of bots
     public static Bot chooseBot(ArrayList<BasePerformer> players, Bot currentBot) {
-        Random random = new Random();
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
         for (BasePerformer player : players) {
-            if (player.getNumberOfInfluences() == 2 && !(player instanceof Player) && !player.equals(currentBot)) {
+            if (!(player instanceof Player) && !player.equals(currentBot)) {
                 possibleChallengers.add(player);
             }
         }
-        if(random.nextInt(possibleChallengers.size())>0)
-            return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
-        return null;   //*************
+        Random random = new Random();
+        if (possibleChallengers.size() == 1) {
+            return (Bot) possibleChallengers.getFirst();
+        }
+        return (Bot) possibleChallengers.get(random.nextInt(possibleChallengers.size()));
     }
 
 

@@ -73,19 +73,9 @@ public class Action{
             Deck.deck.add(choice);
         }
         else {
-            if(player.getInfluences().size()==2) {
-                Character characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
-                player.getInfluences().remove(characterToRemove);
-                Deck.addToDeck(characterToRemove);
-                characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
-                player.getInfluences().remove(characterToRemove);
-                Deck.addToDeck(characterToRemove);
-            }
-            else {
-                Character characterToRemove = Deck.randomizer(player.getInfluences(), 1).getFirst();
-                player.getInfluences().remove(characterToRemove);
-                Deck.addToDeck(characterToRemove);
-            }
+            Character characterToRemove = player.getInfluences().size()==2 ? Deck.randomizer(player.getInfluences(), 1).getFirst() : player.getInfluences().getFirst();
+            player.getInfluences().remove(characterToRemove);
+            Deck.addToDeck(characterToRemove);
         }
         System.out.println(player.getName() + "'s influences now are: " + player.getInfluences());
     }

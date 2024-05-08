@@ -35,6 +35,15 @@ public class Game {
         }
     }
 
+    public void updatePlayers() {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getInfluences().isEmpty()) {
+                System.out.println("Player " + players.get(i).getName() + " left the game!");
+                players.remove(players.get(i));
+            }
+        }
+    }
+
     /**
      * Checks if the game is still ongoing.
      *
@@ -52,12 +61,13 @@ public class Game {
             Scanner scanner = new Scanner(System.in);
             boolean correct = false;
             while (!correct) {
-                System.out.println(players.get(0).getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+                System.out.println(players.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
                 String answer = scanner.next();
                 if (answer.equalsIgnoreCase("yes")) {
-                    challenger = players.getFirst(); // the first player in the players arraylist is always the user in the
+                    challenger = players.getFirst(); // the first player in the players arraylist is always the user
                     correct = true;
-                } else if (answer.equalsIgnoreCase("no")) {
+                } else if (answer.equalsIgnoreCase("no") && players.size() > 2) {
+
                     challenger = Bot.chooseBot(players, (Bot) currentPlayer);
                     correct = true;
                 }

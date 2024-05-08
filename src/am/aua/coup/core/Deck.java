@@ -1,4 +1,5 @@
-package src.am.aua.coup.core; /**
+package src.am.aua.coup.core;
+/**
  * A separate class to keep track of the deck cards with the use of randomizer.
  */
 
@@ -23,8 +24,6 @@ public class Deck {
     /**
      * No-arg constructor
      * Initializes the deck with the default set of cards.
-     *
-     * @return The arraylist of initialized cards.
      */
     public Deck() {
         for (int i = 0; i < 3; i++) {

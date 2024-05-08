@@ -113,7 +113,12 @@ public abstract class BasePerformer {
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {
         if (playerToChallenge.cheat) {
-            Character characterToRemove = Deck.randomizer(playerToChallenge.influences, 1).getFirst();
+            Character characterToRemove;
+            if (playerToChallenge.influences.size() == 1) {
+                characterToRemove = playerToChallenge.influences.getFirst();
+            } else {
+                characterToRemove = Deck.randomizer(playerToChallenge.influences, 1).getFirst();
+            }
             playerToChallenge.influences.remove(characterToRemove);
             Deck.addToDeck(characterToRemove);
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
@@ -132,7 +137,6 @@ public abstract class BasePerformer {
                 }
                 if (enteredIf) {
                     playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
-
                 }
             }
             System.out.println("Congratulations, " + playerToChallenge + "! You won the challenge!");
