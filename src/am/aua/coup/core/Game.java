@@ -6,6 +6,8 @@ import src.am.aua.coup.perform.Bot;
 import src.am.aua.coup.perform.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -21,6 +23,7 @@ public class Game {
      */
     public int numberOfPlayers;
     public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Pedro", "Maddy", "Dima", "Larisa"};
+
     /**
      * Initializes a new game with the specified number of players.
      *
@@ -31,18 +34,29 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
         this.players = new ArrayList<BasePerformer>(numberOfPlayers);
         for (int i = 0; i < numberOfPlayers; i++) {
-            this.players.add(new Bot(defaultNamesForPlayers[i],2));
+            this.players.add(new Bot(defaultNamesForPlayers[i], 2));
         }
     }
 
-    public void updatePlayers() {
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getInfluences().isEmpty()) {
-                System.out.println("Player " + players.get(i).getName() + " left the game!");
-                players.remove(players.get(i));
+    public ArrayList<BasePerformer> updatePlayers(BasePerformer currentPlayer) {
+        List<BasePerformer> playersToRemove = new ArrayList<>();
+        for (BasePerformer player : players) {
+            if (player.getInfluences().isEmpty()) {
+                System.out.println("Player " + player.getName() + " left the game!");
+                playersToRemove.add(player);
             }
         }
+        players.removeAll(playersToRemove);
+        for (BasePerformer basePerformer : playersToRemove) {
+            System.out.println("Player " + basePerformer.getName() + " left the game!");
+        }
+        int index = players.indexOf(currentPlayer);
+        ArrayList<BasePerformer> new_players = new ArrayList<>(players.subList(index + 1, players.size()));
+        new_players.addAll(players.subList(0, index + 1));
+
+        return new_players;
     }
+
 
     /**
      * Checks if the game is still ongoing.
@@ -57,7 +71,7 @@ public class Game {
         BasePerformer challenger = null;
         if (currentPlayer instanceof Player) {
             challenger = Bot.chooseBot(players);
-        } else{
+        } else {
             Scanner scanner = new Scanner(System.in);
             boolean correct = false;
             while (!correct) {
@@ -70,8 +84,7 @@ public class Game {
 
                     challenger = Bot.chooseBot(players, (Bot) currentPlayer);
                     correct = true;
-                }
-                else {
+                } else {
                     System.out.println("Choose yes or no, try again!");
                 }
             }
@@ -93,23 +106,24 @@ public class Game {
      *
      * @throws InvalidNumberOfPlayersException If the number of players is invalid.
      */
-     public void start() throws InvalidNumberOfPlayersException {
+    public void start() throws InvalidNumberOfPlayersException {
         if (!(this.numberOfPlayers > 1 && this.numberOfPlayers <= 7)) {
             throw new InvalidNumberOfPlayersException();
         }
 
-         Scanner userInput = new Scanner(System.in);
+        Scanner userInput = new Scanner(System.in);
 
-         ArrayList<BasePerformer> playerList = new ArrayList<BasePerformer>(numberOfPlayers);
+        ArrayList<BasePerformer> playerList = new ArrayList<BasePerformer>(numberOfPlayers);
 
-         System.out.println("Enter your name: ");
-         String playerName = userInput.next();
-         Player humanPlayer = new Player(playerName,2);
-         humanPlayer.setName(playerName);
-         playerList.add(humanPlayer);
+        System.out.println("Enter your name: ");
+        String playerName = userInput.next();
+        Player humanPlayer = new Player(playerName, 2);
+        humanPlayer.setName(playerName);
+        playerList.add(humanPlayer);
 
         for (int i = 0; i < numberOfPlayers - 1; i++) {
-            playerList.add(new Bot(defaultNamesForPlayers[i],2));;
+            playerList.add(new Bot(defaultNamesForPlayers[i], 2));
+            ;
         }
 
         Deck myDeck = new Deck();

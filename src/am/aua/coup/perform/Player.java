@@ -35,7 +35,7 @@ public class Player extends BasePerformer {
      * @param available arrayList of available items to choose.
      * @return action the user wants to do.
      */
-    public static  <T> T getUserChoice(ArrayList<T> available) {
+    public static <T> T getUserChoice(ArrayList<T> available) {
         Scanner userInput = new Scanner(System.in);
         int index;
 
@@ -50,8 +50,7 @@ public class Player extends BasePerformer {
                 index = userInput.nextInt();
                 if (index >= available.size()) {
                     System.out.println("Now you can't perform this action, please try again later");
-                }
-                else if (index >= 0) {
+                } else if (index >= 0) {
                     return available.get(index);
                 } else {
                     System.out.println("Please, enter a number within the range of the provided items.");
@@ -92,7 +91,7 @@ public class Player extends BasePerformer {
             }
         }
         // this part
-        return this.getUserChoice(this.getAvailableActions());
+        return getUserChoice(Action.getAvailableActions(this));
     }
 
 
@@ -101,16 +100,16 @@ public class Player extends BasePerformer {
         Scanner userInput = new Scanner(System.in);
         if (isActionChallenge) {
             //System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s action? Answer yes or no!");
-           // boolean wantsToChallenge = userInput.next().equalsIgnoreCase("yes");
-           // if (wantsToChallenge) {
-                return this.challenge((Bot) botToChallenge, myDeck, action, true);
-          //  }
+            // boolean wantsToChallenge = userInput.next().equalsIgnoreCase("yes");
+            // if (wantsToChallenge) {
+            return this.challenge((Bot) botToChallenge, myDeck, action, true);
+            //  }
         } else {
-           // System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s block? Answer yes or no!");
-          //  String answer = userInput.next();
+            // System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s block? Answer yes or no!");
+            //  String answer = userInput.next();
             // if (answer.equalsIgnoreCase("yes")) {
-                return this.challenge((Bot) botToChallenge, myDeck, action, false);
-           // }
+            return this.challenge((Bot) botToChallenge, myDeck, action, false);
+            // }
         }
         //return true;
     }

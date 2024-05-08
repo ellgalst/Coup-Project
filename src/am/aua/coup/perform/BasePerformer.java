@@ -64,51 +64,6 @@ public abstract class BasePerformer {
         return this.getClass() == other.getClass() && this.getName().equals(otherObject.getName());
     }
 
-    /**
-     * Gets the actions available to the player based on their wish to cheat or be honest.
-     *
-     * @return The list of available actions for the player.
-     */
-    public ArrayList<Action.Types> getAvailableActions() {
-        if (wallet >= 7) {
-            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
-        }
-        ArrayList<Action.Types> availableActions = new ArrayList<Action.Types>();
-
-        ArrayList<Action.Types> correctActions = new ArrayList<Action.Types>(Arrays.asList(
-                Action.Types.FOREIGN_AID,
-                Action.Types.INCOME
-        ));
-        for (Character influence : influences) {
-            Action.Types actionType = influence.canAct();
-            if (actionType == Action.Types.ASSASSINATE) {
-                if (wallet >= 3 && !correctActions.contains(actionType)) {
-                    correctActions.add(actionType);
-                }
-            } else if (actionType != Action.Types.COUP && !correctActions.contains(actionType)) {
-                correctActions.add(actionType);
-            }
-        }
-        if (!cheat) {
-            availableActions.addAll(correctActions);
-        }
-        else {
-            for (Action.Types action : Action.Types.values()) {
-                if (action == Action.Types.ASSASSINATE) {
-                    if (wallet >= 3 && !correctActions.contains(Action.Types.ASSASSINATE) && !availableActions.contains(action)) {
-                        availableActions.add(Action.Types.ASSASSINATE);
-                    }
-                }
-                else if (!correctActions.contains(action) && action != Action.Types.COUP && !availableActions.contains(action)) {
-                    availableActions.add(action);
-                }
-            }
-        }
-
-
-        return availableActions;
-    }
-
 
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {

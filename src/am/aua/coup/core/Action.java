@@ -4,6 +4,10 @@ import src.am.aua.coup.influences.Character;
 import src.am.aua.coup.perform.BasePerformer;
 import src.am.aua.coup.perform.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Represents the various actions that can be taken in the coup game
  */
@@ -128,5 +132,51 @@ public class Action{
         Character characterToRemove = Deck.randomizer(player2.getInfluences(), 1).getFirst();
         player2.getInfluences().remove(characterToRemove);
         Deck.addToDeck(characterToRemove);
+    }
+
+
+    /**
+     * Gets the actions available to the player based on their wish to cheat or be honest.
+     *
+     * @return The list of available actions for the player.
+     */
+    public static ArrayList<Types> getAvailableActions(BasePerformer player) {
+        if (player.getWallet() >= 7) {
+            return new ArrayList<Action.Types>(List.of(Action.Types.COUP));
+        }
+        ArrayList<Action.Types> availableActions = new ArrayList<Action.Types>();
+
+        ArrayList<Action.Types> correctActions = new ArrayList<Action.Types>(Arrays.asList(
+                Action.Types.FOREIGN_AID,
+                Action.Types.INCOME
+        ));
+        for (Character influence : player.getInfluences()) {
+            Action.Types actionType = influence.canAct();
+            if (actionType == Action.Types.ASSASSINATE) {
+                if (player.getWallet() >= 3 && !correctActions.contains(actionType)) {
+                    correctActions.add(actionType);
+                }
+            } else if (actionType != Action.Types.COUP && !correctActions.contains(actionType) && actionType != null) {
+                correctActions.add(actionType);
+            }
+        }
+        if (!player.getCheat()) {
+            availableActions.addAll(correctActions);
+        }
+        else {
+            for (Action.Types action : Action.Types.values()) {
+                if (action == Action.Types.ASSASSINATE) {
+                    if (player.getWallet() >= 3 && !correctActions.contains(Action.Types.ASSASSINATE) && !availableActions.contains(action)) {
+                        availableActions.add(Action.Types.ASSASSINATE);
+                    }
+                }
+                else if (!correctActions.contains(action) && action != Action.Types.COUP && !availableActions.contains(action) && action != null) {
+                    availableActions.add(action);
+                }
+            }
+        }
+
+
+        return availableActions;
     }
 }

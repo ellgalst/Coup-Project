@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Bot extends BasePerformer {
     // possibilities
-    private final static double CHALLENGE_PROBABILITY = 0.5;
+    private final static double CHALLENGE_PROBABILITY = -1;
     private final static double BLOCK_POSSIBILITY = 0.5;
     private final static double CHEAT_PROBABILITY = 0.5;
 
@@ -56,7 +56,7 @@ public class Bot extends BasePerformer {
     public Action.Types act(Game myGame) {
         Random number = new Random();
         this.setCheat(number.nextDouble() >= CHEAT_PROBABILITY);
-        ArrayList<Action.Types> available = this.getAvailableActions();
+        ArrayList<Action.Types> available = Action.getAvailableActions(this);
         int randomIndex;
         randomIndex = (int) (Math.random() * (available.size()));
         Action.Types chosenAction = available.get(randomIndex);
