@@ -26,8 +26,10 @@ public class Bot extends BasePerformer {
 
     // a method to get choose one Bot from the list of bots
     public static Bot chooseBot(ArrayList<BasePerformer> players) {
+        System.out.println("in the choose bot");
         Random random = new Random();
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
+
         for (BasePerformer player : players) {
             if (player instanceof Bot) {
                 possibleChallengers.add(player);
@@ -40,7 +42,7 @@ public class Bot extends BasePerformer {
     public static Bot chooseBot(ArrayList<BasePerformer> players, Bot currentBot) {
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
         for (BasePerformer player : players) {
-            if (!(player instanceof Player) && !player.equals(currentBot)) {
+            if ((player instanceof Bot) && !player.equals(currentBot)) {
                 possibleChallengers.add(player);
             }
         }
@@ -64,16 +66,16 @@ public class Bot extends BasePerformer {
         return chosenAction;
     }
 
-    // challenge for the bot
+    // look up the return values
     public boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         Random challenge = new Random();
-        if (isActionChallenge) {
-            if (challenge.nextDouble() >= CHALLENGE_PROBABILITY) {
+
+        double nextDouble = challenge.nextDouble();
+        if (nextDouble >= CHALLENGE_PROBABILITY) {
+            if (isActionChallenge) {
                 System.out.println("Player " + this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s action!");
                 return this.challenge(playerToChallenge, myDeck, action, true);
-            }
-        } else {
-            if (challenge.nextDouble() >= CHALLENGE_PROBABILITY) {
+            } else {
                 System.out.println("Player " + this.getName() + " decided to challenge the player " + playerToChallenge.getName() + "'s block!");
                 return this.challenge(playerToChallenge, myDeck, action, false);
             }
@@ -86,7 +88,6 @@ public class Bot extends BasePerformer {
         Random number = new Random();
         if (number.nextDouble() >= BLOCK_POSSIBILITY) {
             System.out.println("Player " + this.getName() + " decided to block " + blocked.getName() + "'s action!");
-
             boolean answer;
             if (blocked instanceof Player) {
                 Scanner userInput = new Scanner(System.in);

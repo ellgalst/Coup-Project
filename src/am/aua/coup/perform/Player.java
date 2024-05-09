@@ -97,21 +97,11 @@ public class Player extends BasePerformer {
 
     // a method for the user to challenge the bot's block or action. returns true if the challenge is successful, otherwise - false
     public boolean challenges(BasePerformer botToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
-        Scanner userInput = new Scanner(System.in);
         if (isActionChallenge) {
-            //System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s action? Answer yes or no!");
-            // boolean wantsToChallenge = userInput.next().equalsIgnoreCase("yes");
-            // if (wantsToChallenge) {
-            return this.challenge((Bot) botToChallenge, myDeck, action, true);
-            //  }
+            return this.challenge(botToChallenge, myDeck, action, true);
         } else {
-            // System.out.println(this.getName() + ", do you want to challenge player " + botToChallenge.getName() + "'s block? Answer yes or no!");
-            //  String answer = userInput.next();
-            // if (answer.equalsIgnoreCase("yes")) {
-            return this.challenge((Bot) botToChallenge, myDeck, action, false);
-            // }
+            return this.challenge(botToChallenge, myDeck, action, false);
         }
-        //return true;
     }
 
 

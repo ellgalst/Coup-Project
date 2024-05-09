@@ -1,11 +1,11 @@
-COUP src.am.aua.coup.core.Game Project
-The COUP game project is a Java implementation of the popular card game COUP, where players bluff and use strategy to expose the influence of their opponents to win the game. Each player aims to be the last one standing by strategically using their role cards, which include characters like the src.am.aua.coup.influences.Duke, src.am.aua.coup.influences.Assassin, src.am.aua.coup.influences.Captain, src.am.aua.coup.influences.Ambassador, and src.am.aua.coup.influences.Contessa.
+COUP Game Project
+The COUP game project is a Java implementation of the popular card game COUP, where players bluff and use strategy to expose the influence of their opponents to win the game. Each player aims to be the last one standing by strategically using their role cards, which include characters like the Duke, Assassin, Captain, Ambassador, and Contessa.
 
 Features
 Five Unique Characters: Implement character-specific actions such as taxing, stealing, and assassinating.
 Dynamic Interaction: Players can block actions based on their characters' abilities.
-Automated src.am.aua.coup.core.Deck Management: Automatic shuffling and handling of the deck.
-src.am.aua.coup.core.Game State Management: Tracks the state of the game, including player turns and remaining influences.
+Automated Deck Management: Automatic shuffling and handling of the deck.
+Game State Management: Tracks the state of the game, including player turns and remaining influences.
 Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -34,10 +34,10 @@ Use the IDE's build feature or run the following command in the terminal:
 
 bash
 Copy code
-javac src.am.aua.coup.core.Game.java
+javac Game.java
 Run the game:
 
-Execute the main method in the src.am.aua.coup.core.Game class to start the game.
+Execute the main method in the Game class to start the game.
 Follow the CLI prompts to play the game.
 Usage
 Once you start the game, follow the on-screen instructions. Each player takes turns choosing actions based on their available characters and coins. Players attempt to deduce the roles of others while simultaneously protecting their own roles and managing their resources.

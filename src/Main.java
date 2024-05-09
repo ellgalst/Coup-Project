@@ -45,21 +45,33 @@ public class Main {
                             target = currentPlayers.get(randomIndex);
                         }
                     }
-
-                    BasePerformer challenger = Game.chooseChallenger(myGame.players, player);
+                    BasePerformer challenger = null;
+                    if (!(playersChoice == Action.Types.FOREIGN_AID || playersChoice == Action.Types.INCOME)) {
+                         challenger = Game.chooseChallenger(myGame.players, player);
+                        System.out.println("challenger in main: "+ challenger);
+                    }
 
                     // challenger tries to challenge the player
 
-                    if (challenger != null && (!challenger.challenges(player, deck, playersChoice, true))) {
-                        myGame.players = new ArrayList<>(myGame.updatePlayers(player));
-                        System.out.println(myGame.players);
-                        if (myGame.players.size() == 1) {
-                            break;
-                        }
-                        if (target != null) {
-                            // if the challenger doesn't succeed and there was a target for the action, target may try to block
-                            if (!target.block(player, deck, playersChoice)) {
-                                // if the target fails the block, action IS performed
+                    // fix the logic of the challenge
+                    if (challenger != null) {
+                        if (challenger.challenges(player, deck, playersChoice, true)) {
+                            if (target != null) {
+                                // If there was a target for the action, target may try to block
+                                if (!target.block(player, deck, playersChoice)) {
+                                    // If the target fails the block, action IS performed
+                                    boolean works = Action.performAction(player, playersChoice, target);
+                                    if (works) {
+                                        System.out.println(player.getName() + "'s action is performed " + playersChoice);
+                                    }
+                                    myGame.players = new ArrayList<>(myGame.updatePlayers(player));
+                                    System.out.println(myGame.players);
+                                    if (myGame.players.size() == 1) {
+                                        break;
+                                    }
+                                }
+                            } else {
+                                // If there is no target and the challenger fails, the action IS performed
                                 boolean works = Action.performAction(player, playersChoice, target);
                                 if (works) {
                                     System.out.println(player.getName() + "'s action is performed " + playersChoice);
@@ -70,23 +82,20 @@ public class Main {
                                     break;
                                 }
                             }
+                        } else {
+                            // If the challenger succeeds, the action is NOT performed
+                            System.out.println("Challenger succeeded! " + player.getName() + "'s action is not performed.");
                         }
-                        // if there is no target and the challenger fails, the action IS performed
+                    } else {
+                        // If there is no challenger or if the action is income or foreign aid, perform the action
                         boolean works = Action.performAction(player, playersChoice, target);
                         if (works) {
                             System.out.println(player.getName() + "'s action is performed " + playersChoice);
                         }
                         myGame.players = new ArrayList<>(myGame.updatePlayers(player));
-                        System.out.println(myGame.players);
-                        if (myGame.players.size() == 1) {
-                            break;
-                        }
-                    } else {
-                        boolean works = Action.performAction(player, playersChoice, target);
-                        if (works) {
-                            System.out.println(player.getName() + "'s action is performed " + playersChoice);
-                        }
                     }
+
+
 
                     // if the challenger succeeds, the action is NOT performed
 

@@ -23,7 +23,7 @@ public class Duke extends Character {
 
     @Override
     public Action.Types canBlock() {
-        return Action.Types.FOREIGN_AID;
+        return null;
     }
 
     @Override

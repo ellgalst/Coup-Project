@@ -65,49 +65,47 @@ public abstract class BasePerformer {
     }
 
 
-    // some issue with challenge
+    // look up the return values
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {
         // if opponent cheats
         if (playerToChallenge.cheat) {
-            Character characterToRemove;
+            ArrayList<Character> charactersToRemove;
             // if opponent's influences are 1, we choose it
-            if (playerToChallenge.influences.size() == 1) {
-                characterToRemove = playerToChallenge.influences.getFirst();
-            } else {
-                // if not, we randomly choose one
-                characterToRemove = Deck.randomizer(playerToChallenge.influences, 1).getFirst();
-            }
+            charactersToRemove = Deck.randomizer(playerToChallenge.influences, 1);
             // eventually we remove the chosen influence
-            playerToChallenge.influences.remove(characterToRemove);
+            playerToChallenge.influences.removeAll(charactersToRemove);
             // then, we add that card back to the deck
-            Deck.addToDeck(characterToRemove);
+            Deck.addToDeck(charactersToRemove);
+            System.out.println("playerToChallenge: " + playerToChallenge);
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
             return true;
         } else {
             // if the opponent is honest, we remove a random influence from the challenger's influences
-            this.influences.remove(Deck.randomizer(this.influences, 1).getFirst());
+            this.influences.removeAll(Deck.randomizer(this.influences, 1));
             // if the challenged thing was an action
             if (isActionChallenge) {
                 // we find it in the influences and remove it, returning the card to the deck
                 boolean enteredIf = false;
                 for (Character influence : playerToChallenge.influences) {
                     if (influence.canAct() == action) {
-                        playerToChallenge.influences.remove(influence);
-                        Deck.addToDeck(influence);
+                        ArrayList<Character> found = new ArrayList<Character>(Collections.singleton(influence));
+                        playerToChallenge.influences.removeAll(found);
+                        Deck.addToDeck(found);
                         enteredIf = true;
                         break;
                     }
                 }
                 // if the card is removed, the opponent gets another card
                 if (enteredIf) {
-                    playerToChallenge.influences.add(Deck.randomizer(myDeck, 1).getFirst());
+                    playerToChallenge.influences.addAll(Deck.randomizer(myDeck, 1));
                 }
             }
             System.out.println("Congratulations, " + playerToChallenge + "! You won the challenge!");
             return false;
         }
     }
+
 
     public abstract boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge);
 

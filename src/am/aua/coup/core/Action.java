@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Represents the various actions that can be taken in the coup game
  */
-public class Action{
+public class Action {
 
     /**
      * Enums for actions
@@ -75,7 +75,7 @@ public class Action{
     public static void performExchange(BasePerformer player) {
 
         player.getInfluences().addAll(Deck.randomizer(Deck.deck, 2));
-        if(player instanceof Player){
+        if (player instanceof Player) {
             System.out.println("What 2 Influences would you like to keep from these: ");
             Character choice = Player.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
@@ -84,11 +84,10 @@ public class Action{
             choice = Player.getUserChoice(player.getInfluences());
             player.getInfluences().remove(choice);
             Deck.deck.add(choice);
-        }
-        else {
-            Character characterToRemove = player.getInfluences().size()==2 ? Deck.randomizer(player.getInfluences(), 1).getFirst() : player.getInfluences().getFirst();
-            player.getInfluences().remove(characterToRemove);
-            Deck.addToDeck(characterToRemove);
+        } else {
+            ArrayList<Character> removes = Deck.randomizer(player.getInfluences(), 2);
+            player.getInfluences().removeAll(removes);
+            Deck.addToDeck(removes);
         }
         System.out.println(player.getName() + "'s influences now are: " + player.getInfluences());
     }
@@ -97,50 +96,50 @@ public class Action{
      * Implements the action of influence src.am.aua.coup.influences.Captain
      * that can steal coins from other players
      */
-    public static void performSteal(BasePerformer player1, BasePerformer player2){
-        if(player2.getWallet()<2){
+    public static void performSteal(BasePerformer player1, BasePerformer player2) {
+        if (player2.getWallet() < 2) {
             player1.setWallet(player1.getWallet() + player2.getWallet());
             player2.setWallet(0);
-        }
-        else {
+        } else {
             player2.setWallet(player2.getWallet() - 2);
             player1.setWallet(player1.getWallet() + 2);
         }
+    }
+
+    public static void performElimination(BasePerformer player1, BasePerformer player2, int coinsToRemove) {
+        ArrayList<Character> charactersToRemove = Deck.randomizer(player2.getInfluences(), 1);
+        player2.getInfluences().removeAll(charactersToRemove);
+        Deck.addToDeck(charactersToRemove);
+        player1.setWallet(player1.getWallet() - coinsToRemove);
     }
 
     /**
      * Method of card src.am.aua.coup.influences.Assassin that forcing
      * one player to give up influence
      */
-    public static void performAssassinate(BasePerformer player1, BasePerformer player2){
-        Character characterToRemove = Deck.randomizer(player2.getInfluences(), 1).getFirst();
-        player2.getInfluences().remove(characterToRemove);
-        Deck.addToDeck(characterToRemove);
-        player1.setWallet(player1.getWallet() - 3);
+    public static void performAssassinate(BasePerformer player1, BasePerformer player2) {
+        performElimination(player1, player2, 3);
     }
 
     /**
      * Method Income that collects one coin from the bank
      */
-    public static void performIncome(BasePerformer player){
+    public static void performIncome(BasePerformer player) {
         player.setWallet(player.getWallet() + 1);
     }
 
     /**
      * Method ForeignAid that collects two coins from the bank
      */
-    public static void performForeignAid(BasePerformer player){
+    public static void performForeignAid(BasePerformer player) {
         player.setWallet(player.getWallet() + 2);
     }
 
     /**
      * Method that cause a player to give up an influence
      */
-    public static void performCoup(BasePerformer player1, BasePerformer player2){
-        player1.setWallet(player1.getWallet() - 7);
-        Character characterToRemove = Deck.randomizer(player2.getInfluences(), 1).getFirst();
-        player2.getInfluences().remove(characterToRemove);
-        Deck.addToDeck(characterToRemove);
+    public static void performCoup(BasePerformer player1, BasePerformer player2) {
+        performElimination(player1, player2, 7);
     }
 
 
@@ -172,15 +171,13 @@ public class Action{
         }
         if (!player.getCheat()) {
             availableActions.addAll(correctActions);
-        }
-        else {
+        } else {
             for (Action.Types action : Action.Types.values()) {
                 if (action == Action.Types.ASSASSINATE) {
                     if (player.getWallet() >= 3 && !correctActions.contains(Action.Types.ASSASSINATE) && !availableActions.contains(action)) {
                         availableActions.add(Action.Types.ASSASSINATE);
                     }
-                }
-                else if (!correctActions.contains(action) && action != Action.Types.COUP && !availableActions.contains(action) && action != null) {
+                } else if (!correctActions.contains(action) && action != Action.Types.COUP && !availableActions.contains(action) && action != null) {
                     availableActions.add(action);
                 }
             }

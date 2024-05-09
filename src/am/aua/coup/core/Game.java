@@ -57,7 +57,6 @@ public class Game {
     }
 
 
-
     /**
      * Checks if the game is still ongoing.
      *
@@ -74,6 +73,7 @@ public class Game {
 
         if (currentPlayer instanceof Player) {
             challenger = Bot.chooseBot(players);
+            System.out.println("challenger: " + challenger);
         } else {
             ArrayList<Player> humanPlayers = new ArrayList<>();
 
@@ -84,20 +84,28 @@ public class Game {
             }
 
             while (!correct) {
-                System.out.println(humanPlayers.get(0).getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
-                String answer = scanner.next();
-                if (answer.equalsIgnoreCase("yes")) {
-                    challenger = humanPlayers.get(0); // The first player in the humanPlayers list is always the user
-                    correct = true;
-                } else if (answer.equalsIgnoreCase("no") && players.size() > 2) {
+                if (!humanPlayers.isEmpty()) {
+                    System.out.println(humanPlayers.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+                    String answer = scanner.next();
+                    if (answer.equalsIgnoreCase("yes")) {
+                        challenger = humanPlayers.getFirst();
+                        correct = true;
+                    } else if (answer.equalsIgnoreCase("no") && players.size() > 2) {
+                        challenger = Bot.chooseBot(players, (Bot) currentPlayer);
+                        correct = true;
+                    } else if (answer.equalsIgnoreCase("no") && players.size() <= 2) {
+                        return null;
+                    } else {
+                        System.out.println("Choose yes or no, try again!");
+                    }
+                } else {
                     challenger = Bot.chooseBot(players, (Bot) currentPlayer);
                     correct = true;
-                } else {
-                    System.out.println("Choose yes or no, try again!");
                 }
             }
         }
         return challenger;
+
     }
 
     public void printData() {
@@ -136,6 +144,7 @@ public class Game {
 
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);
+        System.out.println("deck: "+ myDeck.getDeck());
         System.out.println(players);
 
         for (BasePerformer player : players) {
