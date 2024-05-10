@@ -17,6 +17,9 @@ public abstract class BasePerformer {
     public ArrayList<Character> getInfluences() {
         return influences;
     }
+    public String getInfluencesString(){
+        return influences.getFirst()+", "+influences.getLast();
+    }
 
     public int getNumberOfInfluences() {
         return influences.size();
@@ -65,7 +68,14 @@ public abstract class BasePerformer {
     }
 
 
-    // look up the return values
+    /**
+     * Method gets the player to challenge, the deck, the action and whether the challenged action is action or block.
+     * @param playerToChallenge player to challenge.
+     * @param myDeck the deck.
+     * @param action the action to challenge.
+     * @param isActionChallenge boolean flag of challenged block or action.
+     * @return boolean success or no.
+     */
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {
         // if opponent cheats

@@ -26,6 +26,11 @@ public class Action {
         FOREIGN_AID
     }
 
+    public static ArrayList<Action.Types> actionsArray(){
+        ArrayList<Action.Types> actionList = new ArrayList<>(Arrays.asList(Action.Types.values()));
+        return actionList;
+    }
+
     public static boolean performAction(BasePerformer player, Action.Types action, BasePerformer target) {
         boolean works = false;
         switch (action) {

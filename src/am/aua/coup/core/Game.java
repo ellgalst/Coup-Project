@@ -23,6 +23,9 @@ public class Game {
     public int numberOfPlayers;
     public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Pedro", "Maddy", "Dima", "Larisa"};
 
+    public String[] getDefaultNamesForPlayers(){
+        return defaultNamesForPlayers;
+    }
     /**
      * Initializes a new game with the specified number of players.
      *
