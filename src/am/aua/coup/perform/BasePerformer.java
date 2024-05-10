@@ -77,7 +77,6 @@ public abstract class BasePerformer {
             playerToChallenge.influences.removeAll(charactersToRemove);
             // then, we add that card back to the deck
             Deck.addToDeck(charactersToRemove);
-            System.out.println("playerToChallenge: " + playerToChallenge);
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
             return true;
         } else {

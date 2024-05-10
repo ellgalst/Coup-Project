@@ -26,7 +26,6 @@ public class Bot extends BasePerformer {
 
     // a method to get choose one Bot from the list of bots
     public static Bot chooseBot(ArrayList<BasePerformer> players) {
-        System.out.println("in the choose bot");
         Random random = new Random();
         ArrayList<BasePerformer> possibleChallengers = new ArrayList<BasePerformer>();
 

@@ -50,6 +50,11 @@ public class Deck {
         return new ArrayList<>(deck);
     }
 
+    /**
+     * Adds an influence to the deck of the current game.
+     *
+     * @param influence The influence being added to the deck.
+     */
     public static void addToDeck(ArrayList<Character> influence) {
         deck.addAll(influence);
     }
@@ -76,8 +81,6 @@ public class Deck {
             int randomIndex = random.nextInt(deck.size());
             randomCharacters.add(deck.get(randomIndex));
         }
-        System.out.println("randomCharacters: " + randomCharacters);
-        System.out.println("deck after : "+ deck);
         return randomCharacters;
     }
 
@@ -91,7 +94,6 @@ public class Deck {
     public ArrayList<BasePerformer> distributeCards(ArrayList<BasePerformer> currentPlayers) {
         for (BasePerformer player : currentPlayers) {
             ArrayList<Character> chosenCards = randomizer(deck, 2);
-            System.out.println("chosenCards: "+ chosenCards);
             player.setInfluences(chosenCards);
             deck.removeAll(chosenCards);
         }
