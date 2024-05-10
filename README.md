@@ -1,4 +1,8 @@
 COUP Game Project
+
+For a more in depth description with a demonstrative video, check out our presentation here:   https://www.canva.com/design/DAGEWJfbIXk/mVbiIE7utMLkazmpOXrTwA/edit
+
+
 The COUP game project is a Java implementation of the popular card game COUP, where players bluff and use strategy to expose the influence of their opponents to win the game. Each player aims to be the last one standing by strategically using their role cards, which include characters like the Duke, Assassin, Captain, Ambassador, and Contessa.
 
 Features
