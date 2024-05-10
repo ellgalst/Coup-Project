@@ -16,16 +16,30 @@ public class Assassin extends Character {
         super("Assassin", "Pays 3 coins and makes another player lose 1 influence,");
     }
 
-    // Determines the action type this character can perform
+    /**
+     * Determines the action type this character can perform.
+     *
+     * @return The action type this character can perform.
+     */
     public Action.Types canAct () {
         return Action.Types.ASSASSINATE;
     }
 
+    /**
+     * Determines the action type this character can block.
+     *
+     * @return The action type this character can block.
+     */
     @Override
     public Action.Types canBlock() {
         return null;
     }
 
+    /**
+     * Provides a string representation of the Assassin character.
+     *
+     * @return The string representation of the Assassin character.
+     */
     @Override
     public String toString() {
         return "Assassin";

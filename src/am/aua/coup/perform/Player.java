@@ -7,33 +7,33 @@ import src.am.aua.coup.influences.Character;
 import java.util.*;
 
 /**
- * A separate class to keep track of all players.
+ * A class representing a human player in the coup game.
  */
-
 public class Player extends BasePerformer {
+    /**
+     * Initializes a player with default name "Pedro" and initial coins of 2.
+     */
     public Player() {
         super.setName("Pedro");
         super.setWallet(2);
     }
 
     /**
-     * Constructor method.
-     * Initializes a player with the specified initial number of coins in their wallet. If the player is a bot
-     * initializes its name.
+     * Initializes a player with the specified name and initial coins in their wallet.
      *
+     * @param playerName   The name of the player.
      * @param initialCoins The initial number of coins in the player's wallet.
      */
-    // isHuman remove
     public Player(String playerName, int initialCoins) {
         super.setName(playerName);
         this.setWallet(initialCoins);
     }
 
     /**
-     * A method to return the action user wants to do from the given list of available actions.
+     * Prompts the user to choose an action from the available options.
      *
-     * @param available arrayList of available items to choose.
-     * @return action the user wants to do.
+     * @param available An ArrayList of available actions to choose from.
+     * @return The action chosen by the user.
      */
     public static <T> T getUserChoice(ArrayList<T> available) {
         Scanner userInput = new Scanner(System.in);
@@ -62,6 +62,12 @@ public class Player extends BasePerformer {
         }
     }
 
+    /**
+     * Gets the target bot for an action chosen by the player.
+     *
+     * @param players The list of players including bots.
+     * @return The chosen target bot.
+     */
     public static Bot getTarget(ArrayList<BasePerformer> players) {
         ArrayList<Bot> available = new ArrayList<Bot>();
         for (BasePerformer player : players) {
@@ -73,12 +79,17 @@ public class Player extends BasePerformer {
 
     }
 
-    // a method that that handles the action in the user's turn, returns whether the user cheated
+    /**
+     * Handles the action chosen by the player during their turn.
+     *
+     * @param myGame The current game state.
+     * @return The type of action chosen by the player.
+     */
     public Action.Types act(Game myGame) {
         Scanner scanner = new Scanner(System.in);
         boolean validAnswer = false;
         while (!validAnswer) {
-            System.out.println(this.getName() + ", do you want to cheat in this turn? Answer yes or no!");
+            System.out.println(this + ", do you want to cheat in this turn? Answer yes or no!");
             String answer = scanner.next();
             if (answer.equalsIgnoreCase("no")) {
                 this.setCheat(false);
@@ -90,12 +101,18 @@ public class Player extends BasePerformer {
                 System.out.println("Not sure what you typed. Try again.");
             }
         }
-        // this part
         return getUserChoice(Action.getAvailableActions(this));
     }
 
-
-    // a method for the user to challenge the bot's block or action. returns true if the challenge is successful, otherwise - false
+    /**
+     * Handles challenges initiated by the player.
+     *
+     * @param botToChallenge    The bot being challenged.
+     * @param myDeck            The deck.
+     * @param action            The action being challenged.
+     * @param isActionChallenge True if challenging an action, false if challenging a block.
+     * @return True if the challenge is successful, false otherwise.
+     */
     public boolean challenges(BasePerformer botToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge) {
         if (isActionChallenge) {
             return this.challenge(botToChallenge, myDeck, action, true);
@@ -105,12 +122,19 @@ public class Player extends BasePerformer {
     }
 
 
-    // block for user
+    /**
+     * Handles blocking actions initiated by the player.
+     *
+     * @param blocked The bot player attempting to block.
+     * @param myDeck  The deck.
+     * @param action  The action being blocked.
+     * @return True if the block is successful, false otherwise.
+     */
     public boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action) {
         Scanner userInput = new Scanner(System.in);
-        System.out.println(this.getName() + ", do you want to block player " + blocked.getName() + "'s action? Answer yes or no!");
+        System.out.println(this + ", do you want to block player " + blocked + "'s action? Answer yes or no!");
         if (userInput.next().equalsIgnoreCase("yes")) {
-            System.out.println(this.getName() + " decided to block player " + blocked.getName() + "'s action!");
+            System.out.println(this + " decided to block player " + blocked + "'s action!");
             Bot target = (Bot) blocked;
             return target.challenges(this, myDeck, action, false);
         }

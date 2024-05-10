@@ -12,17 +12,32 @@ public class Ambassador extends Character {
         super("Ambassador", "Exchanges cards with the deck. Can block stealing.");
     }
 
-
-    // Determines the action type this character can perform
+    /**
+     * Determines the action type this character can perform.
+     *
+     * @return The action type this character can perform.
+     */
+    @Override
     public Action.Types canAct () {
         return Action.Types.EXCHANGE;
     }
 
+
+    /**
+     * Determines the action type this character can block.
+     *
+     * @return The action type this character can block.
+     */
     @Override
     public Action.Types canBlock(){
         return Action.Types.STEAL;
     }
 
+    /**
+     * Provides a string representation of the Ambassador character.
+     *
+     * @return The string representation of the Ambassador character.
+     */
     @Override
     public String toString() {
         return "Ambassador";

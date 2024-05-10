@@ -27,8 +27,7 @@ public class Action {
     }
 
     public static ArrayList<Action.Types> actionsArray(){
-        ArrayList<Action.Types> actionList = new ArrayList<>(Arrays.asList(Action.Types.values()));
-        return actionList;
+        return new ArrayList<>(Arrays.asList(Types.values()));
     }
 
     /**
@@ -112,17 +111,17 @@ public class Action {
             player.getInfluences().removeAll(removes);
             Deck.addToDeck(removes);
         }
-        System.out.println(player.getName() + "'s influences now are: " + player.getInfluences());
+        System.out.println(player + "'s influences now are: " + player.getInfluences());
     }
 
     /**
      * Performs the "Assassinate" action, removing an influence from the target player.
      *
-     * @param player1 The player performing the action.
-     * @param player2 The target player.
+     * @param player The player performing the action.
+     * @param target The target player.
      */
-    public static void performAssassinate(BasePerformer player1, BasePerformer player2) {
-        performElimination(player1, player2, 3);
+    public static void performAssassinate(BasePerformer player, BasePerformer target) {
+        performElimination(player, target, 3);
     }
 
     /**

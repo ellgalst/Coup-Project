@@ -21,8 +21,12 @@ public class Game {
      * The total number of players in the game.
      */
     public int numberOfPlayers;
-    public String[] defaultNamesForPlayers = {"Suzan", "Brad", "Pedro", "Maddy", "Dima", "Larisa"};
+    /**
+     * Default names for the bots.
+     */
+    private final String[] defaultNamesForPlayers = {"Suzan", "Brad", "Pedro", "Maddy", "Dima", "Larisa"};
 
+    // getter
     public String[] getDefaultNamesForPlayers(){
         return defaultNamesForPlayers;
     }
@@ -40,17 +44,23 @@ public class Game {
         }
     }
 
+    /**
+     * Updates the list of players removing any players who have lost all their influences.
+     *
+     * @param currentPlayer The player who just took a turn.
+     * @return The updated list of players.
+     */
     public ArrayList<BasePerformer> updatePlayers(BasePerformer currentPlayer) {
         List<BasePerformer> playersToRemove = new ArrayList<>();
         for (BasePerformer player : players) {
             if (player.getInfluences().isEmpty()) {
-                System.out.println("Player " + player.getName() + " left the game!");
+                System.out.println("Player " + player + " left the game!");
                 playersToRemove.add(player);
             }
         }
         players.removeAll(playersToRemove);
         for (BasePerformer basePerformer : playersToRemove) {
-            System.out.println("Player " + basePerformer.getName() + " left the game!");
+            System.out.println("Player " + basePerformer + " left the game!");
         }
         int index = players.indexOf(currentPlayer);
         ArrayList<BasePerformer> new_players = new ArrayList<>(players.subList(index + 1, players.size()));
@@ -69,6 +79,13 @@ public class Game {
         return players.size() != 1;
     }
 
+    /**
+     * Allows the current player to choose a challenger for their action.
+     *
+     * @param players      The list of players.
+     * @param currentPlayer The player who performed the action.
+     * @return The chosen challenger.
+     */
     public static BasePerformer chooseChallenger(ArrayList<BasePerformer> players, BasePerformer currentPlayer) {
         BasePerformer challenger = null;
         Scanner scanner = new Scanner(System.in);
@@ -87,7 +104,7 @@ public class Game {
 
             while (!correct) {
                 if (!humanPlayers.isEmpty()) {
-                    System.out.println(humanPlayers.getFirst().getName() + ", do you want to challenge " + currentPlayer.getName() + "? Answer yes or no!");
+                    System.out.println(humanPlayers.getFirst() + ", do you want to challenge " + currentPlayer + "? Answer yes or no!");
                     String answer = scanner.next();
                     if (answer.equalsIgnoreCase("yes")) {
                         challenger = humanPlayers.getFirst();
@@ -110,10 +127,13 @@ public class Game {
 
     }
 
+    /**
+     * Prints data about the current state of the game.
+     */
     public void printData() {
         System.out.println(players);
         for (BasePerformer current : players) {
-            System.out.println(current.getName() + "'s influences: " + current.getInfluences());
+            System.out.println(current + "'s influences: " + current.getInfluences());
             System.out.println("Wallet: " + current.getWallet());
         }
     }

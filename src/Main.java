@@ -13,9 +13,14 @@ import java.util.Scanner;
 
 import static src.am.aua.coup.core.Deck.deck;
 
+/**
+ * The main class for the Coup game.
+ */
 public class Main {
     /**
      * The entry point of the Coup game.
+     *
+     * @param args Command line arguments.
      */
     public static void main(final String[] args) {
         if (args.length == 0) {
@@ -79,7 +84,7 @@ public class Main {
                                     }
                                 }
                             } else {
-                                System.out.println("Challenger succeeded! " + player.getName() + "'s action is not performed.");
+                                System.out.println("Challenger succeeded! " + player + "'s action is not performed.");
                             }
                         } else {
                             actionWorks(player, playersChoice, target);
@@ -102,10 +107,18 @@ public class Main {
             System.out.println("The game is over!");
         }
     }
+
+    /**
+     * Handles the actions performed by players during the game.
+     *
+     * @param player        The current player.
+     * @param playersChoice The action chosen by the player.
+     * @param target        The target of the action (if applicable).
+     */
     private static void actionWorks (BasePerformer player, Action.Types playersChoice, BasePerformer target) {
         boolean works = Action.performAction(player, playersChoice, target);
         if (works) {
-            System.out.println(player.getName() + "'s action is performed " + playersChoice);
+            System.out.println(player + "'s action is performed " + playersChoice);
         }
     }
 }

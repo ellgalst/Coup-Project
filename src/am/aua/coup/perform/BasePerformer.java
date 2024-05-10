@@ -7,6 +7,9 @@ import src.am.aua.coup.influences.Character;
 
 import java.util.*;
 
+/**
+ * An abstract class representing a performer in the coup game.
+ */
 public abstract class BasePerformer {
     private ArrayList<Character> influences = new ArrayList<Character>(2);
     private int wallet;
@@ -17,12 +20,9 @@ public abstract class BasePerformer {
     public ArrayList<Character> getInfluences() {
         return influences;
     }
-    public String getInfluencesString(){
-        return influences.getFirst()+", "+influences.getLast();
-    }
 
-    public int getNumberOfInfluences() {
-        return influences.size();
+    public String getInfluencesString() {
+        return influences.getFirst() + ", " + influences.getLast();
     }
 
     public int getWallet() {
@@ -54,12 +54,12 @@ public abstract class BasePerformer {
         this.cheat = value;
     }
 
-    // override toString method for the more understandable output
+    @Override
     public String toString() {
         return this.getName();
     }
 
-    // override equals method
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof BasePerformer otherObject)) {
             return false;
@@ -70,31 +70,25 @@ public abstract class BasePerformer {
 
     /**
      * Method gets the player to challenge, the deck, the action and whether the challenged action is action or block.
+     *
      * @param playerToChallenge player to challenge.
-     * @param myDeck the deck.
-     * @param action the action to challenge.
+     * @param myDeck            the deck.
+     * @param action            the action to challenge.
      * @param isActionChallenge boolean flag of challenged block or action.
      * @return boolean success or no.
      */
     public boolean challenge(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action,
                              boolean isActionChallenge) {
-        // if opponent cheats
         if (playerToChallenge.cheat) {
             ArrayList<Character> charactersToRemove;
-            // if opponent's influences are 1, we choose it
             charactersToRemove = Deck.randomizer(playerToChallenge.influences, 1);
-            // eventually we remove the chosen influence
             playerToChallenge.influences.removeAll(charactersToRemove);
-            // then, we add that card back to the deck
             Deck.addToDeck(charactersToRemove);
             System.out.println("Congratulations, " + this.name + "! You won the challenge!");
             return true;
         } else {
-            // if the opponent is honest, we remove a random influence from the challenger's influences
             this.influences.removeAll(Deck.randomizer(this.influences, 1));
-            // if the challenged thing was an action
             if (isActionChallenge) {
-                // we find it in the influences and remove it, returning the card to the deck
                 boolean enteredIf = false;
                 for (Character influence : playerToChallenge.influences) {
                     if (influence.canAct() == action) {
@@ -105,7 +99,6 @@ public abstract class BasePerformer {
                         break;
                     }
                 }
-                // if the card is removed, the opponent gets another card
                 if (enteredIf) {
                     playerToChallenge.influences.addAll(Deck.randomizer(myDeck, 1));
                 }
@@ -115,11 +108,34 @@ public abstract class BasePerformer {
         }
     }
 
-
+    /**
+     * Abstract method to be implemented by subclasses to handle challenges.
+     *
+     * @param playerToChallenge The player to challenge.
+     * @param myDeck            The deck.
+     * @param action            The action to challenge.
+     * @param isActionChallenge True if challenging an action, false if challenging a block.
+     * @return True if the challenge is successful, false otherwise.
+     */
     public abstract boolean challenges(BasePerformer playerToChallenge, ArrayList<Character> myDeck, Action.Types action, boolean isActionChallenge);
 
+
+    /**
+     * Abstract method to be implemented by subclasses to handle blocking actions.
+     *
+     * @param blocked The player attempting to block.
+     * @param myDeck  The deck.
+     * @param action  The action to block.
+     * @return True if the block is successful, false otherwise.
+     */
     public abstract boolean block(BasePerformer blocked, ArrayList<Character> myDeck, Action.Types action);
 
+    /**
+     * Abstract method to be implemented by subclasses to perform an action in the game.
+     *
+     * @param myGame The current game state.
+     * @return The type of action to perform.
+     */
     public abstract Action.Types act(Game myGame);
 
 }

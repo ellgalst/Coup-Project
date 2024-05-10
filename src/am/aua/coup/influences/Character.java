@@ -30,7 +30,24 @@ public abstract class Character{
         description = s;
     }
 
+    /**
+     * Determines the action type this character can perform.
+     *
+     * @return The action type this character can perform.
+     */
     public abstract Action.Types canAct();
+
+    /**
+     * Determines the action type this character can block.
+     *
+     * @return The action type this character can block.
+     */
     public abstract Action.Types canBlock();
+
+    /**
+     * Provides a string representation of the given character.
+     *
+     * @return The string representation of the given character.
+     */
     public abstract String toString();
 }

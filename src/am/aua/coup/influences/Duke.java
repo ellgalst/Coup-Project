@@ -14,18 +14,31 @@ public class Duke extends Character {
     public Duke(){
         super("Duke", "Collects 2 coins. Can block Foreign Aid.");
     }
+
     /**
-     * The type of action this character can perform.
+     * Determines the action type this character can perform.
+     *
+     * @return The action type this character can perform.
      */
     public Action.Types canAct () {
         return Action.Types.TAX;
     }
 
+    /**
+     * Determines the action type this character can block.
+     *
+     * @return The action type this character can block.
+     */
     @Override
     public Action.Types canBlock() {
         return null;
     }
 
+    /**
+     * Provides a string representation of the Duke character.
+     *
+     * @return The string representation of the Duke character.
+     */
     @Override
     public String toString() {
         return "Duke";
