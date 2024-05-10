@@ -76,7 +76,6 @@ public class Game {
 
         if (currentPlayer instanceof Player) {
             challenger = Bot.chooseBot(players);
-            System.out.println("challenger: " + challenger);
         } else {
             ArrayList<Player> humanPlayers = new ArrayList<>();
 
@@ -116,7 +115,6 @@ public class Game {
         for (BasePerformer current : players) {
             System.out.println(current.getName() + "'s influences: " + current.getInfluences());
             System.out.println("Wallet: " + current.getWallet());
-            System.out.println();
         }
     }
 
@@ -142,12 +140,10 @@ public class Game {
 
         for (int i = 0; i < numberOfPlayers - 1; i++) {
             playerList.add(new Bot(defaultNamesForPlayers[i], 2));
-            ;
         }
 
         Deck myDeck = new Deck();
         players = myDeck.distributeCards(playerList);
-        System.out.println("deck: "+ myDeck.getDeck());
         System.out.println(players);
 
         for (BasePerformer player : players) {
